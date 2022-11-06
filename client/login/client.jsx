@@ -608,7 +608,7 @@ const createLoad = () => {
 const createSiteDown = () => {
     ReactDOM.render(
         <SiteDown />,
-        document.querySelector('#secondary')
+        document.querySelector('#content')
     )
 }
 
@@ -644,14 +644,14 @@ const setup = (csrf) => {
 
     signupButton.addEventListener("click", (e) => {
         e.preventDefault();
-        createSignupWindow(csrf); //Uncomment on site up 
+        //createSignupWindow(csrf); //Uncomment on site up 
         createGifs();
         return false;
     });
 
     loginButton.addEventListener("click", (e) => {
         e.preventDefault();
-        createLoginWindow(csrf); //Uncomment on site up
+        //createLoginWindow(csrf); //Uncomment on site up
         createGifs();
         return false;
     });
@@ -670,16 +670,20 @@ const setup = (csrf) => {
 
     homeButton.addEventListener("click", (e) => {
         e.preventDefault();
-        createSearchForm(); // Uncomment on site up
-        createAssistSelect();
+        //createSearchForm(); // Uncomment on site up
+        //createAssistSelect();
         //createPlayerSearchForm();
-        loadAllVideosFromServer(); // Uncomment on site up
+        //loadAllVideosFromServer(); // Uncomment on site up
+        createSiteDown();
         return false;
     });
 
-    createSearchForm();
-    createLoad();
-    createAssistSelect();
+    // createSearchForm();
+    // createLoad();
+    // createAssistSelect();
+
+    createSiteDown();
+
 
     // Player links
     if(window.location.pathname != '/') {
@@ -691,7 +695,7 @@ const setup = (csrf) => {
     else {
         //console.log('false')
      //   createPlayerSearchForm();
-        loadAllVideosFromServer() //Default window Uncomment all on sit up
+        //loadAllVideosFromServer() //Default window Uncomment all on sit up
     }
 
 };
