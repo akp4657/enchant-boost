@@ -13,7 +13,7 @@ const csrf = require('csurf');
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
 //const devURL = process.env.MONGODB_URI || 'mongodb://localhost/DFCDatabase';
-const prodURL = 'mongodb+srv://heroku_lh6d56zl:root@ignite-boost-cluster.o0f86.mongodb.net/heroku_lh6d56zl?retryWrites=true&w=majority'
+const prodURL = 'mongodb+srv://enchant-boost:ejbFPkYbRTelAXEH@enchant-boost-cluster.fhda0zs.mongodb.net/enchant-boost'
 
 // Setup mongoose options to use newer functionality
 const mongooseOptions = {

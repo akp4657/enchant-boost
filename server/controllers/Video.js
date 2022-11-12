@@ -113,7 +113,7 @@ const searchVideos = (request, response) => {
 
   // check if the params exist
   const {
-    player1, player2, char1, char2, assist1, assist2, version, sort
+    player1, player2, char1, char2, sort
   } = req.query;
   let i = 0; // keeps track of position in params.$and array
 
@@ -144,40 +144,6 @@ const searchVideos = (request, response) => {
     params.$and[i] = { $and: [{ char2: `${char2}` }, { char1: `${char1}` }] };
   } else if (char1 && char2) {
     params.$and[i] = { $or: [{ char2: `${char2}` }, { char1: `${char1}` }, { char2: `${char1}` }, { char1: `${char2}` }] };
-    i++;
-  }
-
-  // If the character and assist are selected
-  if (char1 && assist1) {
-    params.$and[i] = { $or: [{ char1: `${char1}`, assist1: `${assist1}` }, { char2: `${char1}`, assist2: `${assist1}` }] };
-    i++;
-  }
-  if (char2 && assist2) {
-    params.$and[i] = { $or: [{ char1: `${char2}`, assist1: `${assist2}` }, { char2: `${char2}`, assist2: `${assist2}` }] };
-    i++;
-  }
-
-  // If one assist is selected
-  if (assist1) {
-    params.$and[i] = { $or: [{ assist1: `${assist1}` }, { assist2: `${assist1}` }] };
-    i++;
-  }
-  if (assist2) {
-    params.$and[i] = { $or: [{ assist2: `${assist2}` }, { assist1: `${assist2}` }] };
-    i++;
-  }
-
-  // If both assists are called
-  // check if it's a mirror first
-  if(assist1 === assist2 && assist1 && assist2) {
-    params.$and[i] = { $and: [{ assist2: `${assist2}` }, { assist1: `${assist1}` }] };
-  } else if (assist1 && assist2) {
-    params.$and[i] = { $or: [{ assist2: `${assist2}`}, { assist1: `${assist1}` }, { assist2: `${assist1}`}, { assist1: `${assist2}` }] };
-    i++;
-  }
-
-  if (version) {
-    params.$and[i] = { $or: [{version: `${version}`}]};
     i++;
   }
 
