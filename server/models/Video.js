@@ -67,7 +67,7 @@ const VideoSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-});
+}, { timestamps: true });
 
 VideoSchema.statics.toAPI = (doc) => ({
   player1: doc.player1,

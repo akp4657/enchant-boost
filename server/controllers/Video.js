@@ -32,10 +32,8 @@ const makeVideo = (req, res) => {
       player2: values[i].player2,
       char1: values[i].char1,
       char2: values[i].char2,
-      assist1: values[i].assist1,
-      assist2: values[i].assist2,
       link: values[i].link,
-      version: values[i].version,
+      type: values[i].type,
       matchDate: values[i].matchDate,
       owner: req.session.account._id,
     };
@@ -54,6 +52,7 @@ const makeVideo = (req, res) => {
     promiseArray.push(videoPromise);
   }
 
+  //console.log(values)
 
   Promise.all(promiseArray).then(() => res.json({ redirect: '/main' }));
 };

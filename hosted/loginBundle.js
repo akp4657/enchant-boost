@@ -568,15 +568,17 @@ var setup = function setup(csrf) {
   var reportSubmit = document.querySelector('#reportSubmit');
   var dataButton = document.querySelector('#dataButton');
   signupButton.addEventListener("click", function (e) {
-    e.preventDefault(); //createSignupWindow(csrf); //Uncomment on site up 
+    e.preventDefault();
+    createSignupWindow(csrf); //Uncomment on site up 
+    //createGifs();
 
-    createGifs();
     return false;
   });
   loginButton.addEventListener("click", function (e) {
-    e.preventDefault(); //createLoginWindow(csrf); //Uncomment on site up
+    e.preventDefault();
+    createLoginWindow(csrf); //Uncomment on site up
+    //createGifs();
 
-    createGifs();
     return false;
   });
   reportButton.addEventListener("click", function (e) {

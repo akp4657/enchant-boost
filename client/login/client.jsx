@@ -600,15 +600,15 @@ const setup = (csrf) => {
 
     signupButton.addEventListener("click", (e) => {
         e.preventDefault();
-        //createSignupWindow(csrf); //Uncomment on site up 
-        createGifs();
+        createSignupWindow(csrf); //Uncomment on site up 
+        //createGifs();
         return false;
     });
 
     loginButton.addEventListener("click", (e) => {
         e.preventDefault();
-        //createLoginWindow(csrf); //Uncomment on site up
-        createGifs();
+        createLoginWindow(csrf); //Uncomment on site up
+        //createGifs();
         return false;
     });
 

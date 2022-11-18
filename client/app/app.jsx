@@ -78,7 +78,7 @@ const handleVideo = (e) => {
             // Add characters as well
             // and iterate the videoKey and reset the modification values
             videoObj[videoKey].player2 = this.value;
-            videoObj[videoKey].version = $('#videoForm').find('#version').find(":selected").val();
+            videoObj[videoKey].type = $('#videoForm').find('#type').find(":selected").val();
             videoObj[videoKey].matchDate = $('#videoForm').find('#matchDate').val();
             videoKey++;
             modValue=-1;
@@ -95,23 +95,19 @@ const handleVideo = (e) => {
     $('#videoForm').find('select').each(function() {
         // One of the selections is for the game version, we don't need that
         // Also, if the key is equal to zero, skip it.
-        if(this.id != "version") {
+        if(this.id != "type") {
             if(videoKey>0) {
                 if(charModValue === 0) {
     
                     // In order to ensure the object exists, take it from 
                     // the loop number and go down what's already been created
                     // and add that property to the list
-                    videoObj[loopNumber-videoKey].assist1 = this.value;
-                } else if(charModValue === 1) {
                     videoObj[loopNumber-videoKey].char1 = this.value;
-                } else if(charModValue === 2) {
+                } else if(charModValue === 1) {
                     videoObj[loopNumber-videoKey].char2 = this.value;
-                } else if(charModValue === 3) {
-                    videoObj[loopNumber-videoKey].assist2 = this.value;
                     charModValue = -1;
                     videoKey--;
-                }
+                } 
                 charModValue++;
             }
         }
@@ -175,7 +171,6 @@ const handleReset = (e) => {
 
     $("#player1Search").val("");
     $("#player2Search").val("");
-    $("#gameSearch").val("").prop('selected', true).trigger("change");
 
     return false;
 } 
@@ -207,17 +202,6 @@ const handleSearch = (player) => {
         if($("#char2Search").find(":selected").text() !== 'Char 2' &&
         $("#char2Search").find(":selected").text() !== 'Anyone'){
             queryString += `&char2=${$("#char2Search").find(":selected").text()}`
-        }
-        if($("#assist1Search").find(":selected").text() !== 'Ast 1' &&
-        $("#assist1Search").find(":selected").text() !== 'Anyone'){
-            queryString += `&assist1=${$("#assist1Search").find(":selected").text()}`
-        }   
-        if($("#assist2Search").find(":selected").text() !== 'Ast 2' &&
-        $("#assist2Search").find(":selected").text() !== 'Anyone'){
-            queryString += `&assist2=${$("#assist2Search").find(":selected").text()}`
-        }
-        if($("#gameSec").val() && $("#gameSec").val() != 'Any'){
-            queryString += `&version=${$("#gameSec").val()}`
         }
         if($("#sortSec").val() && $("#sortSec").val() != 'Sort'){
             queryString += `&sort=${$("#sortSec").val()}`
@@ -270,14 +254,10 @@ const SearchForm = () => {
 
     let char1Select = $("#char1Search").find(":selected").val()
     let char2Select = $("#char2Search").find(":selected").val()
-    let assist1Select = $("#assist1Search").find(":selected").val()
-    let assist2Select = $("#assist2Search").find(":selected").val()
     let versionSelect = $("#gameSec").find(":selected").val()
 
     let char1Src = `/assets/img/Characters/${char1Select}.png`
     let char2Src = `/assets/img/Characters/${char2Select}.png`
-    let assist1Src = `/assets/img/Assists/${assist1Select}.png`
-    let assist2Src = `/assets/img/Assists/${assist2Select}.png`
     let gameSrc = `/assets/img/Version/${versionSelect}.png`
 
     return(
@@ -294,26 +274,20 @@ const SearchForm = () => {
                 <tbody>
                     <tr>
                         <td><img id="char1Img" src={char1Src} alt={char1Select}/></td>
-                        <td><img id="assist1Img" src={assist1Src} alt={assist1Select}/></td>
                     </tr>
                     <tr>
                         <td>{char1Search}</td>
-                        <td>{assist1Search}</td>
                         <td><input className="form-control" id="player1Search" type="text" name="player1" placeholder="Name"/></td>
                     </tr>
                     <tr>
                         <td><img id="char2Img" src={char2Src} alt={char2Select}/></td>
-                        <td><img id="assist2Img" src={assist2Src} alt={assist2Select}/></td>
                         <td></td>
                     </tr>
                     <tr>
                         <td>{char2Search}</td>
-                        <td>{assist2Search}</td>
                         <td><input className="form-control" id="player2Search" type="text" name="player2" placeholder="Name"/></td>
                     </tr>
                     <tr>
-                        <td>{gameSelection}</td>
-                        <td></td>
                         <td>{sortSelection}</td>
                         <td></td>
                     </tr>
@@ -333,50 +307,34 @@ const VideoForm = (props) => {
     let rows = [];
     let charSelection
     let char2Selection
-    let assist1Selection
-    let assist2Selection
 
     let char1Sel
     let char2Sel
-    let assist1Sel
-    let assist2Sel
 
     let char1Src
     let char2Src
-    let assist1Src
-    let assist2Src
 
 
     for(let i = 0; i < loopNumber; i++) {
         let char1ID = `char${i}`;
         let char2ID = `char0${i}`;
-        let assist1ID = `assist${i}`;
-        let assist2ID = `assist0${i}`;
 
         char1Select.props.id = char1ID
         char2Select.props.id = char2ID
-        assist1Select.props.id = assist1ID
-        assist2Select.props.id = assist2ID
 
 
         charSelection = char1Select;
         char2Selection = char2Select;
-        assist1Selection = assist1Select;
-        assist2Selection = assist2Select;
 
         //console.log(char1ID)
 
         char1Sel = $(`#${char1ID}`).find(":selected").val();
         char2Sel = $(`#${char2ID}`).find(":selected").val();
-        assist1Sel = $(`#${assist1ID}`).find(":selected").val();
-        assist2Sel = $(`#${assist2ID}`).find(":selected").val();
 
         //console.log(char1Sel)
 
         char1Src = `/assets/img/Characters/${char1Sel}.png`
         char2Src = `/assets/img/Characters/${char2Sel}.png`
-        assist1Src = `/assets/img/Assists/${assist1Sel}.png`
-        assist2Src = `/assets/img/Assists/${assist2Sel}.png`
 
         /*<td><img id="assist1Img" src={assist1Src} alt={assist1Sel}/>{assist1Selection}</td>
         <td><img id="char1Img" src={char1Src} alt={char1Sel}/>{charSelection}</td>
@@ -387,10 +345,8 @@ const VideoForm = (props) => {
                 <tr>
                     <td><input className="form-control" id="timestamp" type="text" name="timestamp" placeholder="00:00:00"/></td>
                     <td><input className="form-control" id="playerOne" type="text" name="playerOne" placeholder="Player 1"/></td>
-                    <td><img id="assist1Img" src={assist1Src} alt={assist1Sel}/>{assist1Selection}</td>
                     <td><img id="char1Img" src={char1Src} alt={char1Sel}/>{charSelection}</td>
                     <td><img id="char2Img" src={char2Src} alt={char2Sel}/>{char2Selection}</td>
-                    <td><img id="assist2Img" src={assist2Src} alt={assist2Sel}/>{assist2Selection}</td>
                     <td><input className="form-control" id="playerTwo" type="text" name="playerTwo" placeholder="Player 2"/></td>
                 </tr>
             </tbody>
@@ -408,10 +364,12 @@ const VideoForm = (props) => {
     >
         <div id ="static">
             <input id="videoLink" className='form-control' type="text" name="videoLink" placeholder="YouTube Link (https://www.youtube.com/watch?v=***********)"/>
-            <select className="form-control" id="version" placeholder="Version">
+            <select className="form-control" id="type" placeholder="Match Type">
                 <option value="" disabled selected hidden>Vers.</option>
-                <option value="2">DFC:I</option>
-                <option value="1">DFC</option>
+                <option value="Tournament">Tournament</option>
+                <option value="Set">Set</option>
+                <option value="Casuals">Casuals</option>
+                <option value="Netplay">Netplay</option>
             </select>
             <input id="matchDate" className='form-control' type='text' name='matchDate' placeholder='YYYY-MM-DD'/>
                 <table id="videoFormTable" className="table table-sm table-dark">
@@ -608,9 +566,6 @@ const VideoList = function(props) {
 
         let char1Src;
         let char2Src;
-        let assist1Src;
-        let assist2Src;
-        let versionSrc;
 
         let charImg1;
         let charImg2;
@@ -622,30 +577,21 @@ const VideoList = function(props) {
 
         char1Src = `/assets/img/Characters/${video.char1}.png`;
         char2Src = `/assets/img/Characters/${video.char2}.png`;
-        assist1Src = `/assets/img/Assists/${video.assist1}.png`;
-        assist2Src = `/assets/img/Assists/${video.assist2}.png`;
-        versionSrc = `/assets/img/Version/${video.version}.png`;
 
         charImg1 = <img id="char1Img" src={char1Src} alt={video.char1} />
         charImg2 = <img id="char2Img" src={char2Src} alt={video.char2} />
-        assistImg1 = <img id="assist1Img" src={assist1Src} alt={video.assist1} />
-        assistImg2 = <img id="assist2Img" src={assist2Src} alt={video.assist2} />
-        versionImg = <img id="versionImg" height= "50px" width="50px"src={versionSrc} alt={video.version} />
 
         
         return (
             <tbody>
                 <tr>
                     <td id='tdP1'>{video.player1}</td>
-                    <td>{assistImg1}</td>
                     <td>{charImg1}</td>
                     <td>{charImg2}</td>
-                    <td>{assistImg2}</td>
                     <td id='tdP2'>{video.player2}</td>
                     <td>
                         <a href={video.link} className="icons-sm yt-ic" target="_blank"><i className="fab fa-youtube fa-2x"> </i></a>
                     </td>
-                    <td>{versionImg}</td>
                     <td>{video.matchDate}</td>
                 </tr>
             </tbody>
@@ -985,108 +931,42 @@ $(document).ready(function() {
 
 //#region Character Forms
 //Separated the character forms for ease of reference and readability in above code
-const char1Select = <select className='form-control'>
-    <option value="Akira">Akira</option><option value="Ako">Ako</option>
-    <option value="Asuna">Asuna</option><option value="Emi">Emi</option><option value="Kirino">Kirino</option>
-    <option value="Kirito">Kirito</option><option value="Kuroko">Kuroko</option><option value="Kuroyukihime">Kuroyukihime</option>
-    <option value="Mikoto">Mikoto</option><option value="Miyuki">Miyuki</option>
-    <option value="Quenser">Quenser</option><option value="Rentaro">Rentaro</option><option value="Selvaria">Selvaria</option>
-    <option value="Shana">Shana</option><option value="Shizuo">Shizuo</option><option value="Taiga">Taiga</option>
-    <option value="Tatsuya">Tatsuya</option><option value="Tomoka">Tomoka</option><option value="Yukina">Yukina</option>
-    <option value="Yuuki">Yuuki</option>
+const char1Select = <select id = "char1Search" className='form-control'>
+    <option value="undefined" disabled selected hidden>Char 2</option><option value="Anyone">Anyone</option>
+    <option value="Arthur">Arthur</option><option value="Bisclavret">Bisclavret</option>
+    <option value="EternalFlame">Eternal Flame</option><option value="Iai">Iai Arthur</option><option value="Iori">Iori</option>
+    <option value="Koume">Koume</option><option value="Nimue">Nimue</option><option value="Nitou">Nitou Arthur</option>
+    <option value="SnowWhite">Snow White</option><option value="Thief">Thief Arthur</option>
+    <option value="Yamaneko">Yamaneko Arthur</option><option value="Zex">Zex Siefried</option>
     </select>;
 
-const assist1Select = <select id = "assist1" className='form-control'>
-    <option value="Accelerator">Accelerator</option><option value="Alicia">Alicia</option>
-    <option value="Boogiepop">Boogiepop</option><option value="Celty">Celty</option><option value="Dokuro">Dokuro</option>
-    <option value="Enju">Enju</option><option value="Erio">Erio</option><option value="Froleytia">Froleytia</option>
-    <option value="Haruyuki">Haruyuki</option><option value="Holo">Holo</option><option value="Innocent Charm">Innocent Charm</option>
-    <option value="Iriya">Iriya</option><option value="Izaya">Izaya</option><option value="Kino">Kino</option>
-    <option value="Kojou">Kojou</option><option value="Kouko">Kouko</option><option value="Kuroneko">Kuroneko</option>
-    <option value="Leafa">Leafa</option><option value="LLENN">LLENN</option><option value="Mashiro">Mashiro</option>
-    <option value="Miyuki">Miyuki</option><option value="Pai">Pai</option><option value="Rusian">Rusian</option>
-    <option value="Ryuuji">Ryuuji</option><option value="Sadao">Sadao</option><option value="Tatsuya">Tatsuya</option>
-    <option value="Touma">Touma</option><option value="Tomo">Tomo</option><option value="Uiharu">Uiharu</option>
-    <option value="Wilhelmina">Wilhelmina</option><option value="Zero">Zero</option>
+
+const char2Select = <select id = "char1Search" className='form-control'>
+    <option value="undefined" disabled selected hidden>Char 2</option><option value="Anyone">Anyone</option>
+    <option value="Arthur">Arthur</option><option value="Bisclavret">Bisclavret</option>
+    <option value="EternalFlame">Eternal Flame</option><option value="Iai">Iai Arthur</option><option value="Iori">Iori</option>
+    <option value="Koume">Koume</option><option value="Nimue">Nimue</option><option value="Nitou">Nitou Arthur</option>
+    <option value="SnowWhite">Snow White</option><option value="Thief">Thief Arthur</option>
+    <option value="Yamaneko">Yamaneko Arthur</option><option value="Zex">Zex Siefried</option>
     </select>;
 
-const char2Select = <select id = "char2" className='form-control'>
-    <option value="Akira">Akira</option><option value="Ako">Ako</option>
-    <option value="Asuna">Asuna</option><option value="Emi">Emi</option><option value="Kirino">Kirino</option>
-    <option value="Kirito">Kirito</option><option value="Kuroko">Kuroko</option><option value="Kuroyukihime">Kuroyukihime</option>
-    <option value="Mikoto">Mikoto</option><option value="Miyuki">Miyuki</option>
-    <option value="Quenser">Quenser</option><option value="Rentaro">Rentaro</option><option value="Selvaria">Selvaria</option>
-    <option value="Shana">Shana</option><option value="Shizuo">Shizuo</option><option value="Taiga">Taiga</option>
-    <option value="Tatsuya">Tatsuya</option><option value="Tomoka">Tomoka</option><option value="Yukina">Yukina</option>
-    <option value="Yuuki">Yuuki</option>
-    </select>;
 
-const assist2Select = <select id = "assist2" className='form-control'>
-    <option value="Accelerator">Accelerator</option><option value="Alicia">Alicia</option>
-    <option value="Boogiepop">Boogiepop</option><option value="Celty">Celty</option><option value="Dokuro">Dokuro</option>
-    <option value="Enju">Enju</option><option value="Erio">Erio</option><option value="Froleytia">Froleytia</option>
-    <option value="Haruyuki">Haruyuki</option><option value="Holo">Holo</option><option value="Innocent Charm">Innocent Charm</option>
-    <option value="Iriya">Iriya</option><option value="Izaya">Izaya</option><option value="Kino">Kino</option>
-    <option value="Kojou">Kojou</option><option value="Kouko">Kouko</option><option value="Kuroneko">Kuroneko</option>
-    <option value="Leafa">Leafa</option><option value="LLENN">LLENN</option><option value="Mashiro">Mashiro</option>
-    <option value="Miyuki">Miyuki</option><option value="Pai">Pai</option><option value="Rusian">Rusian</option>
-    <option value="Ryuuji">Ryuuji</option><option value="Sadao">Sadao</option><option value="Tatsuya">Tatsuya</option>
-    <option value="Touma">Touma</option><option value="Tomo">Tomo</option><option value="Uiharu">Uiharu</option>
-    <option value="Wilhelmina">Wilhelmina</option><option value="Zero">Zero</option>
-    </select>;
-
-const char1Search = <select id = "char1Search" className='form-control'>
-    <option value="undefined" disabled selected hidden>Char 1</option><option value="Anyone">Anyone</option>
-    <option value="Akira">Akira</option><option value="Ako">Ako</option>
-    <option value="Asuna">Asuna</option><option value="Emi">Emi</option><option value="Kirino">Kirino</option>
-    <option value="Kirito">Kirito</option><option value="Kuroko">Kuroko</option><option value="Kuroyukihime">Kuroyukihime</option>
-    <option value="Mikoto">Mikoto</option><option value="Miyuki">Miyuki</option>
-    <option value="Quenser">Quenser</option><option value="Rentaro">Rentaro</option><option value="Selvaria">Selvaria</option>
-    <option value="Shana">Shana</option><option value="Shizuo">Shizuo</option><option value="Taiga">Taiga</option>
-    <option value="Tatsuya">Tatsuya</option><option value="Tomoka">Tomoka</option><option value="Yukina">Yukina</option>
-    <option value="Yuuki">Yuuki</option>
-    </select>;
-
-const assist1Search = <select id = "assist1Search" className='form-control'>
-    <option value="undefined" disabled selected hidden>Ast 1</option><option value="Anyone">Anyone</option>
-    <option value="Accelerator">Accelerator</option><option value="Alicia">Alicia</option>
-    <option value="Boogiepop">Boogiepop</option><option value="Celty">Celty</option><option value="Dokuro">Dokuro</option>
-    <option value="Enju">Enju</option><option value="Erio">Erio</option><option value="Froleytia">Froleytia</option>
-    <option value="Haruyuki">Haruyuki</option><option value="Holo">Holo</option><option value="Innocent Charm">Innocent Charm</option>
-    <option value="Iriya">Iriya</option><option value="Izaya">Izaya</option><option value="Kino">Kino</option>
-    <option value="Kojou">Kojou</option><option value="Kouko">Kouko</option><option value="Kuroneko">Kuroneko</option>
-    <option value="Leafa">Leafa</option><option value="LLENN">LLENN</option><option value="Mashiro">Mashiro</option>
-    <option value="Miyuki">Miyuki</option><option value="Pai">Pai</option><option value="Rusian">Rusian</option>
-    <option value="Ryuuji">Ryuuji</option><option value="Sadao">Sadao</option><option value="Tatsuya">Tatsuya</option>
-    <option value="Touma">Touma</option><option value="Tomo">Tomo</option><option value="Uiharu">Uiharu</option>
-    <option value="Wilhelmina">Wilhelmina</option><option value="Zero">Zero</option>
+const char1Search= <select id = "char2Search" className='form-control'>
+    <option value="undefined" disabled selected hidden>Char 2</option><option value="Anyone">Anyone</option>
+    <option value="Arthur">Arthur</option><option value="Bisclavret">Bisclavret</option>
+    <option value="EternalFlame">Eternal Flame</option><option value="Iai">Iai Arthur</option><option value="Iori">Iori</option>
+    <option value="Koume">Koume</option><option value="Nimue">Nimue</option><option value="Nitou">Nitou Arthur</option>
+    <option value="SnowWhite">Snow White</option><option value="Thief">Thief Arthur</option>
+    <option value="Yamaneko">Yamaneko Arthur</option><option value="Zex">Zex Siefried</option>
     </select>;
 
 const char2Search= <select id = "char2Search" className='form-control'>
     <option value="undefined" disabled selected hidden>Char 2</option><option value="Anyone">Anyone</option>
-    <option value="Akira">Akira</option><option value="Ako">Ako</option>
-    <option value="Asuna">Asuna</option><option value="Emi">Emi</option><option value="Kirino">Kirino</option>
-    <option value="Kirito">Kirito</option><option value="Kuroko">Kuroko</option><option value="Kuroyukihime">Kuroyukihime</option>
-    <option value="Mikoto">Mikoto</option><option value="Miyuki">Miyuki</option>
-    <option value="Quenser">Quenser</option><option value="Rentaro">Rentaro</option><option value="Selvaria">Selvaria</option>
-    <option value="Shana">Shana</option><option value="Shizuo">Shizuo</option><option value="Taiga">Taiga</option>
-    <option value="Tatsuya">Tatsuya</option><option value="Tomoka">Tomoka</option><option value="Yukina">Yukina</option>
-    <option value="Yuuki">Yuuki</option>
-    </select>;
-
-const assist2Search = <select id = "assist2Search" className='form-control'>
-    <option value="undefined" disabled selected hidden>Ast 2</option><option value="Anyone">Anyone</option>
-    <option value="Accelerator">Accelerator</option><option value="Alicia">Alicia</option>
-    <option value="Boogiepop">Boogiepop</option><option value="Celty">Celty</option><option value="Dokuro">Dokuro</option>
-    <option value="Enju">Enju</option><option value="Erio">Erio</option><option value="Froleytia">Froleytia</option>
-    <option value="Haruyuki">Haruyuki</option><option value="Holo">Holo</option><option value="Innocent Charm">Innocent Charm</option>
-    <option value="Iriya">Iriya</option><option value="Izaya">Izaya</option><option value="Kino">Kino</option>
-    <option value="Kojou">Kojou</option><option value="Kouko">Kouko</option><option value="Kuroneko">Kuroneko</option>
-    <option value="Leafa">Leafa</option><option value="LLENN">LLENN</option><option value="Mashiro">Mashiro</option>
-    <option value="Miyuki">Miyuki</option><option value="Pai">Pai</option><option value="Rusian">Rusian</option>
-    <option value="Ryuuji">Ryuuji</option><option value="Sadao">Sadao</option><option value="Tatsuya">Tatsuya</option>
-    <option value="Touma">Touma</option><option value="Tomo">Tomo</option><option value="Uiharu">Uiharu</option>
-    <option value="Wilhelmina">Wilhelmina</option><option value="Zero">Zero</option>
+    <option value="Arthur">Arthur</option><option value="Bisclavret">Bisclavret</option>
+    <option value="EternalFlame">Eternal Flame</option><option value="Iai">Iai Arthur</option><option value="Iori">Iori</option>
+    <option value="Koume">Koume</option><option value="Nimue">Nimue</option><option value="Nitou">Nitou Arthur</option>
+    <option value="SnowWhite">Snow White</option><option value="Thief">Thief Arthur</option>
+    <option value="Yamaneko">Yamaneko Arthur</option><option value="Zex">Zex Siefried</option>
     </select>;
 
 const assistInfoSelect = <select id = "assistInfoSelect" className='form-control'>
