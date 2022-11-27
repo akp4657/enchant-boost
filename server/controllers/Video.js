@@ -112,7 +112,7 @@ const searchVideos = (request, response) => {
 
   // check if the params exist
   const {
-    player1, player2, char1, char2, sort
+    player1, player2, char1, char2, sort, type
   } = req.query;
   let i = 0; // keeps track of position in params.$and array
 
@@ -146,6 +146,11 @@ const searchVideos = (request, response) => {
     i++;
   }
 
+  if (type) {
+    params.$and[i] = { $or: [{ type: `${type}` }] };
+    i++;
+  }
+
   if(sort) {
     if(sort === 'Oldest') {
       sorting = 1
@@ -154,9 +159,6 @@ const searchVideos = (request, response) => {
     }
   }
 
-  console.log(sorting)
-
-  console.log(params)
   if (i === 0) params = {}; // set params to empty object if no query params were sent
   
   return Video.VideoModel.find(params, (err, docs) => {

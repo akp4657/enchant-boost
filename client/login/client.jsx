@@ -67,14 +67,18 @@ const handleSearch = (player) => {
         }
         if($("#char1Search").find(":selected").text() !== 'Char 1' &&
         $("#char1Search").find(":selected").text() !== 'Anyone'){
-            queryString += `&char1=${$("#char1Search").find(":selected").text()}`
+            console.log($("#char1Search").find(":selected").text() )
+            queryString += `&char1=${$("#char1Search").find(":selected").val()}`
         }   
         if($("#char2Search").find(":selected").text() !== 'Char 2' &&
         $("#char2Search").find(":selected").text() !== 'Anyone'){
-            queryString += `&char2=${$("#char2Search").find(":selected").text()}`
+            queryString += `&char2=${$("#char2Search").find(":selected").val()}`
         }
         if($("#sortSec").val() && $("#sortSec").val() != 'Sort'){
             queryString += `&sort=${$("#sortSec").val()}`
+        }
+        if($("#typeSec").val() && $("#typeSec").val() != 'Match Type'){
+            queryString += `&type=${$("#typeSec").val()}`
         }
     } 
 
@@ -110,8 +114,16 @@ const SearchForm = () => {
 
 
     const sortSelection = <select id = "sortSec" className = 'form-control'>
-    <option value="undefined" disabled selected hidden>Sort</option><option value="Oldest">Oldest</option>
+    <option value="Sort" disabled selected hidden>Sort</option><option value="Oldest">Oldest</option>
     <option value="Newest">Newest</option>
+    </select>;
+
+    const typeSelection = <select id = "typeSec" className = 'form-control'>
+        <option value="Match Type" disabled selected hidden>Match Type</option>
+        <option value="Tournament">Tournament</option>
+        <option value="Set">Set</option>
+        <option value="Casuals">Casuals</option>
+        <option value="Netplay">Netplay</option>
     </select>;
 
     let char1Select = $("#char1Search").find(":selected").val()
@@ -149,7 +161,7 @@ const SearchForm = () => {
                     </tr>
                     <tr>
                         <td>{sortSelection}</td>
-                        <td></td>
+                        <td>{typeSelection}</td>
                     </tr>
                 </tbody>
             </table>
@@ -235,7 +247,6 @@ const SignupWindow = (props) => {
 const VideoList = function(props) {
     pagedVideos = [];
 
-    console.log(props.videos)
     if(props.videos.length === 0) {
         return (
             <div className="videoList">
@@ -256,9 +267,6 @@ const VideoList = function(props) {
 
         charImg1 = <img id="char1Img" src={char1Src} alt={video.char1} />
         charImg2 = <img id="char2Img" src={char2Src} alt={video.char2} />
-
-        console.log(video)
-
         
         return (
                 <tbody>
@@ -270,6 +278,7 @@ const VideoList = function(props) {
                         <td>
                             <a href={video.link} className="icons-sm yt-ic" target="_blank"><i className="fab fa-youtube fa-2x"> </i></a>
                         </td>
+                        <td>{video.type}</td>
                         <td>{video.matchDate}</td>
                     </tr>
                 </tbody>
@@ -392,15 +401,15 @@ const AssistInfo = () => {
             info = a;
             return;
         }
-
-        console.dir(info)
     })
+
+    //console.log(assistSrc)
 
     return (
         <div>
             <div className = 'infoList'>
                 {assistInfoSelect}
-                <img id="assistInfoImg" src={assistSrc} alt={selected} />
+                <img id="assistInfoImg" src={assistSrc}/>
             </div>
             <div className = 'textList' id='textInfo'>
                 <h1>{info}</h1>
@@ -450,7 +459,6 @@ const createLoginWindow = (csrf) => {
     ReactDOM.unmountComponentAtNode(document.querySelector("#content"));
     ReactDOM.unmountComponentAtNode(document.querySelector("#info"));
     ReactDOM.unmountComponentAtNode(document.querySelector("#search"));
-    ReactDOM.unmountComponentAtNode(document.querySelector("#gifSection"));
 
     ReactDOM.render(
         <LoginWindow csrf={csrf} />,
@@ -596,7 +604,7 @@ const setup = (csrf) => {
     const homeButton = document.querySelector("#home");
     const reportButton = document.querySelector('#reportButton');
     const reportSubmit = document.querySelector('#reportSubmit');
-    const dataButton = document.querySelector('#dataButton');
+    //const dataButton = document.querySelector('#dataButton');
 
     signupButton.addEventListener("click", (e) => {
         e.preventDefault();
@@ -614,15 +622,15 @@ const setup = (csrf) => {
 
     reportButton.addEventListener("click", (e) => {
         e.preventDefault();
-        alert('Email at ignite-boost.net@gmail.com\n\nDiscord @TheS Spine#0453\n\n@ me in a DFC Discord\n\nPlease be as detailed as possible with your report')
+        alert('Email at enchant-boost.net@gmail.com\n\nPlease be as detailed as possible with your report')
         return false;
     });
 
-    dataButton.addEventListener("click", (e) => {
-        e.preventDefault();
-        createDataForm();
-        return false;
-    })
+    // dataButton.addEventListener("click", (e) => {
+    //     e.preventDefault();
+    //     createDataForm();
+    //     return false;
+    // })
 
     homeButton.addEventListener("click", (e) => {
         e.preventDefault();
@@ -645,7 +653,6 @@ const setup = (csrf) => {
     if(window.location.pathname != '/') {
         //console.log('true')
         let player = /[^/]*$/.exec(window.location.pathname)[0]
-        console.log(player)
         handleSearch(player);
     }
     else {
@@ -669,11 +676,11 @@ $(document).ready(function() {
 //#region Character Forms
 //Separated the character forms for ease of reference and readability in above code
 const char1Search = <select id = "char1Search" className='form-control'>
-    <option value="undefined" disabled selected hidden>Char 2</option><option value="Anyone">Anyone</option>
+    <option value="undefined" disabled selected hidden>Char 1</option><option value="Anyone">Anyone</option>
     <option value="Arthur">Arthur</option><option value="Bisclavret">Bisclavret</option>
     <option value="EternalFlame">Eternal Flame</option><option value="Iai">Iai Arthur</option><option value="Iori">Iori</option>
     <option value="Koume">Koume</option><option value="Nimue">Nimue</option><option value="Nitou">Nitou Arthur</option>
-    <option value="SnowWhite">Snow White</option><option value="Thief">Thief Arthur</option>
+    <option value="Riesz">Riesz</option><option value="SnowWhite">Snow White</option><option value="Thief">Thief Arthur</option>
     <option value="Yamaneko">Yamaneko Arthur</option><option value="Zex">Zex Siefried</option>
     </select>;
 
@@ -682,462 +689,251 @@ const char2Search= <select id = "char2Search" className='form-control'>
     <option value="Arthur">Arthur</option><option value="Bisclavret">Bisclavret</option>
     <option value="EternalFlame">Eternal Flame</option><option value="Iai">Iai Arthur</option><option value="Iori">Iori</option>
     <option value="Koume">Koume</option><option value="Nimue">Nimue</option><option value="Nitou">Nitou Arthur</option>
-    <option value="SnowWhite">Snow White</option><option value="Thief">Thief Arthur</option>
+    <option value="Riesz">Riesz</option><option value="SnowWhite">Snow White</option><option value="Thief">Thief Arthur</option>
     <option value="Yamaneko">Yamaneko Arthur</option><option value="Zex">Zex Siefried</option>
     </select>;
 
 const assistInfoSelect = <select id = "assistInfoSelect" className='form-control'>
     <option value="" disabled selected hidden>Ast Info</option>
-    <option value="Accelerator">Accelerator</option><option value="Alicia">Alicia</option>
-    <option value="Boogiepop">Boogiepop</option><option value="Celty">Celty</option><option value="Dokuro">Dokuro</option>
-    <option value="Enju">Enju</option><option value="Erio">Erio</option><option value="Froleytia">Froleytia</option>
-    <option value="Haruyuki">Haruyuki</option><option value="Holo">Holo</option><option value="Innocent Charm">Innocent Charm</option>
-    <option value="Iriya">Iriya</option><option value="Izaya">Izaya</option><option value="Kino">Kino</option>
-    <option value="Kojou">Kojou</option><option value="Kouko">Kouko</option><option value="Kuroneko">Kuroneko</option>
-    <option value="Leafa">Leafa</option><option value="LLENN">LLENN</option><option value="Mashiro">Mashiro</option>
-    <option value="Miyuki">Miyuki</option><option value="Pai">Pai</option><option value="Rusian">Rusian</option>
-    <option value="Ryuuji">Ryuuji</option><option value="Sadao">Sadao</option><option value="Tatsuya">Tatsuya</option>
-    <option value="Touma">Touma</option><option value="Tomo">Tomo</option><option value="Uiharu">Uiharu</option>
-    <option value="Wilhelmina">Wilhelmina</option><option value="Zero">Zero</option>
+    <option value="Aife">Aife</option><option value="Balin">Balin</option><option value="Claire">Claire</option>
+    <option value="Constantine">Constantine</option><option value="Cu">Cu</option><option value="Elle">Elle</option>
+    <option value="Enide">Enide</option><option value="Evaine">Evaine</option><option value="Faye">Faye</option>
+    <option value="Galahad">Galahad</option><option value="Gawain">Gawain</option><option value="Grey">Grey</option>
+    <option value="Guinevere">Guinevere</option><option value="Hawkeye">Hawkeye</option><option value="Jaku">Jaku</option>
+    <option value="Kaguya">Kaguya</option><option value="Kriemhild">Kriemhild</option><option value="Lancelot">Lancelot</option>
+    <option value="Mercenary">Mercenary</option><option value="Millionaire Arthur">Millionaire Arthur</option><option value="Mordred">Mordred</option>
+    <option value="Peridod">Peridod</option><option value="Pharsalia">Pharsalia</option>
+    <option value="Reafe">Reafe</option><option value="Scathach">Scathach</option><option value="Sorcery King">Sorcery King</option>
+    <option value="Tecno-Smith">Tecno-Smith</option><option value="Tor">Tor</option><option value="Urthach">Urthach</option>
+    <option value="Utahime">Utahime</option>
     </select>;
 
 const charDataSearch = <select id = "charDataSearch" className='form-control'>
-    <option value="undefined" disabled selected hidden>Char</option>
+    <option value="undefined" disabled selected hidden>Char</option><option value="Anyone">Anyone</option>
     <option value="Arthur">Arthur</option><option value="Bisclavret">Bisclavret</option>
     <option value="EternalFlame">Eternal Flame</option><option value="Iai">Iai Arthur</option><option value="Iori">Iori</option>
     <option value="Koume">Koume</option><option value="Nimue">Nimue</option><option value="Nitou">Nitou Arthur</option>
-    <option value="SnowWhite">Snow White</option><option value="Thief">Thief Arthur</option>
+    <option value="Riesz">Riesz</option><option value="SnowWhite">Snow White</option><option value="Thief">Thief Arthur</option>
     <option value="Yamaneko">Yamaneko Arthur</option><option value="Zex">Zex Siefried</option>
     </select>;
 
 const assistInfo = [
-    <div id = 'aInfo' value ='Accelerator'>
-        <h2>5S</h2>
-        <p>Last Order wanders onto the stage for several seconds and if she is attacked, Accelerator will appear and attack the opponent, blowing them away on hit </p>
-        <li>The startup on the counter is slow enough that fast attacks like Kino 5S can interrupt it if the opponent is looking for it</li>
-        <li>If the opponent is hit while Last Order is out, the counter will be negated</li>
-        <li>The counter-attack is not instant and can be blocked if triggered from a jump in or a low recovery move</li>
-        <li>The counter-attack is full screen and has a ton of blockstun, letting you approach the opponent if blocked</li>
-        <li>Has a special interaction with the Touma support, where Accelerator's counter will not activate if triggered by Touma's 6S</li>
+    <div id = 'aInfo' value ='Faye'>
+        <h2>Counter Effect</h2>
+        <p>Increased untechable time</p>
         <br></br>
-        <h2>6S</h2>
-        <p>Accelerator stomps the ground and sends a ground wave across the stage that bounces the opponent up and down</p>
-        <li>There is enough time to dash up while the opponent is being bounced to continue the combo. What you can do depends on how close you are initially</li>
-        <li>Does not hit against airborne opponents</li>
+        <p>Standard fireball.</p>
+        <p>Good for pressure and has quick enough recovery that attempts to roll through the fireball can generally be punished.</p>
     </div>,
-    <div id = 'aInfo' value ='Alicia'>
-        <h2>5S</h2>
-        <p>Alicia throws a grenade that explodes when it touches the ground, launching the opponent</p>
-        <li>The grenade itself does not have a hitbox, only the explosion</li>
-        <li>The grenade has enough delay for you to run up and perform a quick mixup, if close enough</li>
+    <div id = 'aInfo' value ='Jaku'>
+        <h2>Counter Effect</h2>
+        <p>Will cause the opponent to enter a stagger state into knockdown. Significantly increased untechable time. </p>
         <br></br>
-        <h2>6S</h2>
-        <p>Alicia poses in front of the player and after a short delay, she transforms into Valkyria mode and teleports towards the opponent and attacks with a multi hitting move that launches the opponent </p>
-        <li>As soon as Alicia's hair fully turns blue, she cannot be interrupted, even if the opponent hits you</li>
+        <p>Nice Chin Chin! Elle will run across the ground. On contact with the opponent, she will hit them, forcing standing state.</p>
+        <p>Too reactable to be a mixup but is seen in some combos due to the restand.</p>
     </div>,
-    <div id = 'aInfo' value ='Boogiepop'>
-        <h2>5S</h2>
-        <p>Boogiepop appears in front of the player and uses a ranged attack</p>
-        <li>Launches on hit</li>
-        <li>Only hits a specific area, can whiff if too close or too far away</li>
+    <div id = 'aInfo' value ='Balin'>
+        <h2>Counter Effect</h2>
+        <p>Increased untechable time</p>
         <br></br>
-        <h2>6S</h2>
-        <p>Boogiepop appears in front of the player for a long amount of time as a flute plays. Afterwards they turn around, the screen goes dark, then they attack the entire screen. </p>
-        <li>Launches on hit</li>
-        <li>Hits full screen and is air unblockable</li>
-        <li>Deals 500 damage and 1500 white damage when blocked</li>
-        <li>During the startup you gain 65% of a bar of meter</li>
+        <p>Balin will drop her sword in an arcing attack. Will slightly track the opponent.</p>
+        <p>Very good all-purpose support. Fast with a great hitbox, Balin can control neutral extremely well functioning as both an anti-ground and at times, an anti-air tool. Fast characters can sometimes run past Balin's tracking to make it whiff mid-run.</p>
     </div>,
-    <div id = 'aInfo' value ='Celty'>
-        <h2>5S</h2>
-        <p>Celty will ride across the screen on a motorcycle and slash at the opponent as she passes by. </p>
+    <div id = 'aInfo' value ='Gawain'>
+        <h2>Counter Effect</h2>
+        <p>Untechable Knockdown. Counter-hit effect carries through both hits.</p>
         <br></br>
-        <h2>6S</h2>
-        <p>Celty will fall from the air on her motorcycle and ride back the direction she came from as she lands. Launches high on hit for easy combo confirms.</p>
+        <p>Attacks from the ground below the player's position. Gawain does a two part attack. First attacking along the ground before summoning a large fire pillar.</p>
+        <p>Primarily used in combos and blockstrings. Weak hit-box for neutral but has high untechable time and high base damage.</p>
     </div>,
-    <div id = 'aInfo' value ='Dokuro'>
-        <h2>5S</h2>
-        <p>Dokuro falls from the top of the screen with her mace </p>
-        <li>Hits about 2 characters spaces in front the player and covers the entire vertical space because of its quick speed</li>
+    <div id = 'aInfo' value ='Mercenary'>
+        <h2>Counter Effect</h2>
+        <p>Untechable knockdown. Counter-hit effect carries throughout the shockwave.</p>
         <br></br>
-        <h2>5[S]</h2>
-        <p>Dokuro throws her mace and knocks your own character into the air and wall bounces into another hard knockdown</p>
-        <li>Only available when you are knocked down at the cost of 3 meter</li>
-        <li>This hit inflicts around 1500 white damage to yourself</li>
-        <li>Afterwards she spins her mace around that hits multiple times </li>
-        <br></br>
-        <h2>6S</h2>
-        <p>Dokuro throws her mace extremely fast across the screen at an upward angle</p>
-        <li>Launches on hit</li>
-        <li>Because of the angle, this move will whiff against crouching opponents from full screen</li>
-        <li>Will generally cause hard knockdown on hit, even with substantial combo proration before it</li>
+        <p>Mercenary will be summoned above the player character and slam directly downwards. Upon reaching the ground, he will cause a shockwave, carrying the opponent across the screen. Startup is 28F when performed on the ground against grounded opponents.</p>
+        <p>Amazing support all-round. Good screen control, can function as an anti-air, good combo filler, good frame advantage, has great synergy with a large amount of characters.</p>
     </div>,
-    <div id = 'aInfo' value ='Enju'>
-        <h2>5S</h2>
-        <p>Enju appears from the top corner of the screen behind the player and divekicks the opponent, targeting the location the opponent was at during the startup. Launches the opponent on hit.</p>
-        <li>If Enju lands a clean hit on the opponent, the screen will zoom in and award bonus damage, and Enju will attack a second time, knocking the opponent down to ground level.</li>
-        <li>If Enju lands an off-center hit on the opponent, the screen will not zoom in.</li>
+    <div id = 'aInfo' value ='Claire'>
+        <h2>Counter Effect</h2>
+        <p>Increased untechable time.</p>
         <br></br>
-        <h2>5[S]</h2>
-        <p>Enju appears and applies a mark on the opponent that lasts for about 10 seconds and does one of the following:</p>
-        <li>If the opponent calls his assist while the mark is active, Enju kicks the assist away and negates it</li>
-        <li>If the opponent is hit Enju will attack just like 5S, however there is no follow up attack</li>
-        <br></br>
-        <h2>6S</h2>
-        <p>Enju appears directly in front of the player and launches the opponent</p>
-        <li>If Enju lands this move while the opponent is still on their feet (?), the screen will zoom in and award full damage. Otherwise, the move will do substantially reduced damage.</li>
+        <p>Claire will throw a proximity-triggered mine infront of her. It will trigger automatically when the opponent is in a vulnerable state (i.e hittable) when they are within range.</p>
+        <p>Can control the placement of the mine by holding ⭠ or ⭢ when summoning.</p>
+        <p>Decent assist on paper. Generally not seen because she fails to control air space. Used for okizeme or screen control.</p>
     </div>,
-    <div id = 'aInfo' value ='Erio'>
-        <h2>5S</h2>
-        <p>Erio runs from behind you to 2/3s of the screen away and covers herself in a futon, hopping towards the opponent. As she hops around, any opponent attack hitbox that touches her will be nullified and treated as a 
-        whiffed move that can't be canceled out of, allowing you to "whiff punish" moves that would have hit you normally. Any player attack hitbox that touches her will not change, but will force Erio to hop slightly in that direction. </p>
-        <li>Erio will continue to hop around until either: 
-            <ul>
-                <li>The player hits Erio 3 times in total</li>
-                <li>The opponent hits Erio at least 1 time and Erio has hopped 3 times in total</li>
-                <li>Erio has hopped 20 times</li>
-            </ul>
-        </li>
-        <li>Erio does start this move 2/3s of the screen away, and takes a long time to become active, so this move is mainly for offensive oki pressure. It is very unsuitable if you are being cornered by the opponent, unlike many other counter assists.</li>
+    <div id = 'aInfo' value ='Hawkeye'>
+        <h2>Counter Effect</h2>
+        <p>Increased untechable time.</p>
         <br></br>
-        <h2>6S</h2>
-        <p>Erio runs in from behind your character and slides across the floor to the other side of the screen. She will then run in from that other side, after which you can hit her again to 
-        repeat the sliding attack. Erio can slide 3 times in total per assist call. </p>
-        <li>Once Erio starts her first slide, she cannot be interrupted by the opponent for that slide and all subsequent run-slides.</li>
-        <li>If the player does not hit Erio while running in the second time, she will continue off screen, ending her assist call without a third run-by.</li>
+        <p>Hawkeye performs a delayed rising attack at the opponents position. Reaches extremely high and tracks slightly before becoming active.</p>
+        <p>Has use in neutral to control the opponent's movement in neutral. Due to its delay attack and tracking, it has some use in combos as well.</p>
     </div>,
-    <div id = 'aInfo' value ='Froleytia'>
-        <h2>5S</h2>
-        <p>Froleytia appears behind the player and supports them with cover fire aimed at the ground around and in front of the player </p>
-        <li>The animation of the diagonal cover fire has no hitbox, the attack is only the ground effect</li>
+    <div id = 'aInfo' value ='Mordred'>
+        <h2>Counter Effect</h2>
+        <p>Increased untechable time.</p>
         <br></br>
-        <h2>6S</h2>
-        <p>Froleytia appears in front of the player and after a brief moment she supports him with with a barrage of missiles</p>
-        <li>The missiles will track the opponent wherever they are on screen, with seemingly no height limit</li>
-        <li>Froleytia is vulnerable for the entire move, including while her missiles are firing. Given that fact and how she stands out in the open, 
-            this assist is not very suited as neutral tool, and should be used for combos and wakeup setups instead.</li>
+        <p>Mordred shoots a wide laser 45° diagonally upwards. Can force launch on knocked down opponents.</p>
+        <p>Only seen on fire element characters for maximising damage off EB combos.</p>
     </div>,
-    <div id = 'aInfo' value ='Haruyuki'>
-        <h2>5S</h2>
-        <p>Haruyuki applies a marker on the opponent, and after a short delay he divekicks the opponent and flies away.</p>
-        <li>The second hit launches the opponent for an easy combo confirm.</li>
+    <div id = 'aInfo' value ='Cu'>
+        <h2>Counter Effect</h2>
+        <p> Untechable knockdown. Counter-hit effect carries.</p>
         <br></br>
-        <h2>5[S]</h2>
-        <p>Haruyuki applies a marker on the opponent, and once the opponent is hit Haruyuki will automatically attack like in his 5S. If the opponent is not hit within 10 seconds, Haruyuki will cancel his attack.</p>
-        <li>Does not have the ability to negate the opponent's assist like Enju.</li>
-        <br></br>
-        <h2>6S</h2>
-        <p>Haruyuki appears in front of the player, and fires a charged arrow horizontally across the screen. Wallbounces on hit, giving ample time to run up and extend a combo or land a Power Blast. </p>
+        <p>After a long delay, Chulainn throws his spear at a downward angle. Upon collission with the ground, it will summon a fire pillar that reaches full screen.</p>
+        <p>Generally not used due to its long startup. Has synergy with some characters with elemental counter-hit.</p>
     </div>,
-    <div id = 'aInfo' value ='Holo'>
-        <h2>5S</h2>
-        <p>Holo slashes the opponent with her large claw, launching the opponent on hit</p>
-        <li>The opponent can tech out of the air on the way down, so going straight to an air combo might be needed depending on the starter</li>
+    <div id = 'aInfo' value ='Elle'>
+        <h2>Counter Effect</h2>
+        <p>Increased freeze time. Slightly increased untechable time.</p>
         <br></br>
-        <h2>6S</h2>
-        <p>Holo hops forward and summons a small field of wheat for 2.5 seconds</p>
-        <li>Holo's initial hop can hit the opponent, which can lead into a hard knockdown into OTG, or be extended into a longer combo. It is recommended to choose an 
-        option that let's your character remain in the field, otherwise you should use 5S for damage.</li>
-        <li>Once Holo creates the field of wheat, she can no longer be hit</li>
-        <li>When the field of wheat is summoned for the first time in a round, the player will receive the following buffs: 
-            <ul>
-                <li>Status Up Level 1 (6% attack up and 6% defense up) for 10 seconds, as soon as you enter the field</li>
-                <li>Regeneration of up to 15% health and 15% white health for a total of 30%, depending on how long you were on the field</li>
-                <li>Regeneration of up to 80% of one bar of meter, depending on how long you were on the field</li>
-            </ul>
-        </li>
-        <li>On subsequent summonings in the same round, the health and meter regeneration are drastically reduced.</li>
-        <li>As long as your horizontal position is over the field, it will count for "being on the field", even if you are jumping.</li>
-        <li>Blocking attacks within the field will deny your health and meter regeneration.</li>
+        <p>Standard fireball.</p>
+        <p>Good for pressure and has quick enough recovery that attempts to roll through the fireball can generally be punished.</p>
     </div>,
-    <div id = 'aInfo' value ='Innocent Charm'>
-        <h2>5S</h2>
-        <p>Hina comes out a small distance in front of the player and sparkles fly around her while slowly pulling the opponent towards her. While the sparkles are visible, 
-        Hina can block one hit from any hitbox, releasing bubbles as a counter. These bubbles put the opponent in hitstop, are only one hit, and can be blocked. The counter can be safe-jumped. </p>
+    <div id = 'aInfo' value ='Evaine'>
+        <h2>Counter Effect</h2>
+        <p>Increased freeze time. Increased untechable time.</p>
         <br></br>
-        <h2>6S</h2>
-        <p>Hina flies further than 5S distance and has bubbles come out immediately while also pulling the opponent toward her. These bubbles are only one hit and can be blocked. If not blocked, it puts the opponent in hitstop. </p>
+        <p>Summoned above the player character. Evaine smacks a watermelon at an angle. This will bounce off walls a maximum of 3 times. Frame data is if the ball strikes the opponent instantly after it is hit.</p>
+        <p>Amazing assist. Cheap cost, Good angle, fast projectile speed and can control space extremely well with the wall bounce. Synergises extremely well with a lot of characters and can also be used as okizeme in certain situations.</p>
     </div>,
-    <div id = 'aInfo' value ='Iriya'>
-        <h2>5S</h2>
-        <p>Iriya appears in front of the player and eats a bowl of food</p>
-        <li>Once the bowl of food is eaten a food icon will appear and up to 3 icons can be stored 
-            <ul>
-                <li>The player can hit the bowl to knock it towards the opponent. Hitting it with an A normal will arc it toward the opponent's position. 
-                    Hitting it with a B or C normal will send it up off the screen, and will drop directly over the opponent's position after a second passes.</li>
-            </ul>
-        </li>
-        <li>Once 2 food icons are collected, the player receives Status Up Lv. 1 for 10 seconds</li>
-        <li>Once 3 food icons are collected, the player receives Status Up Lv. 3 for 10 seconds, and a row of air-unblockable explosions go off. The number of food icons will reset to 0.</li>
-        <li>Iriya can be hit by the opponent to deny the food buffs if done early enough in her animation. If too slow, the opponent can at least deny the plate projectile.</li>
+    <div id = 'aInfo' value ='Sorcery King'>
+        <h2>Counter Effect</h2>
+        <p>Increased freeze time. Untechable knockdown on clean hit. Increased untechable time on non-clean hit.</p>
         <br></br>
-        <h2>6S</h2>
-        <p>Iriya appears behind the opponent and hits them with her scooter, launching the opponent horizontally on hit. </p>
-        <li>Useful as a full-screen poke, or as a combo extension</li>
+        <p>Mage-Guild Arthur be summoned at the player's position and then rush across the screen extremely quickly. Will clean hit if the opponent is hit close to the player character on summon, causing a knockdown. On further away hits, will cause a sliding effect.</p>
+        <p>Generally all round useful assist. Great neutral assist due to its fast speed and long range. Good synergy with elemental counters due to long freeze time and untechable knockdown. Naturally increased untechable time for Ice Supports allows it to be used in combos for most characters.</p>
     </div>,
-    <div id = 'aInfo' value ='Izaya'>
-        <h2>5S</h2>
-        <p>Izaya appears in front of the player holding his hands up, and if he is hit he teleports behind the opponent and slashes him multiple times, launching them vertically on hit</p>
-        <li>The counter is not instant and can be blocked if triggered from a jump in or a low recovery move</li>
-        <li>If the move is Support Cancelled, he automatically does the follow up attack instead</li>
-        <li>2nd startup value is when he is Support Cancelled</li>
+    <div id = 'aInfo' value ='Lancelot'>
+        <h2>Counter Effect</h2>
+        <p>Increased untechable time.</p>
         <br></br>
-        <h2>6S</h2>
-        <p>Izaya trips the opponent with his foot then stomps on 3 times before kicking 1 more time.</p>
-        <li>Has fairly quick startup and the hitbox is deceptively large</li>
-        <li>Normally the opponent is in OTG state, but Trump Cards and Climax Arts will connect, but only before the 4th kick.</li>
+        <p>Lancelot is summoned on the ground at the player's position. Bracing his shield, he will either activate as a counter when struck, or after time, striking a large area in front of him. Will only block one attack and will gain a collision hitbox on activation.</p>
+        <p>Guard point is active from 23F onwards, Will automatically strike at 75F.</p>
+        <p>Amazing assist with unique purposes. Can be used to deter opponents from poking in neutral or be used as okizeme. High scaling limits his use in combos however.</p>
     </div>,
-    <div id = 'aInfo' value ='Kino'>
-        <h2>5S</h2>
-        <p>Shoots horizontally. Fast start-up, bullet moves fast, fast recovery. Low damage.</p>
-        <li>Startup is based off when used at the closest possible distance</li>
+    <div id = 'aInfo' value ='Tor'>
+        <h2>Counter Effect</h2>
+        <p>Untechable Knockdown on clean hit. Increased untechable time on non-clean hit.</p>
         <br></br>
-        <h2>6S</h2>
-        <p>Charges a little and then shoots diagonally upwards. Slow start-up and launches upwards on hit, normally leading to a hard knockdown. </p>
+        <p>Tor will spawn on the player character and kick upwards at a 30* angle. Will clean hit within a certain distance, causing exteremely long hit-stop and untechable time. On non-clean hit, the opponent will wall bounce with signifcant untechable time.</p>
+        <p>Extremely good assist on paper. Fast summon, high base damage with significant untechable time making it very easy to combo off on any hit. Although the hitbox is larger than it looks, it is still only let down by its angle of attack.</p>
     </div>,
-    <div id = 'aInfo' value ='Kojou'>
-        <h2>5S</h2>
-        <p>Summons Regulus Aurum which attacks the opponent with a homing lightning strike, which scatters across the ground </p>
-        <li>Has fairly long startup, but lasts for a long while</li>
+    <div id = 'aInfo' value ='Constantine'>
+        <h2>Counter Effect</h2>
+        <p>Increased untechable time.</p>
         <br></br>
-        <h2>6S</h2>
-        <p>Summons Al-Nasl-Minium which attacks the enemy with crimson light </p>
-        <li>Has quicker startup compared to 5S and floats the opponent on hit</li>
+        <p>Constantine is summoned at the player's position. Spawns a slow moving ice ball. Will trigger within proximity of the opponent and freeze them for a long period of time on hit. Will automatically explode if not triggered within an extremely long amount of time.</p>
+        <p>Great okizeme tool due to spawning above trigger range when done grounded. Can set up unblockables with command grabs. Great neutral tool as it presents a slow moving hitbox but can be invalidated by attacks which can clash/delete projectiles.</p>
     </div>,
-    <div id = 'aInfo' value ='Kouko'>
-        <h2>5S</h2>
-        <p>Throws a bouquet of flowers upwards then blows a kiss afterwards that leaves a status effect that drains the opponents meter and gives you meter </p>
-        <li>You will continue to get meter even if the opponent has none</li>
-        <li>Only hits against opponents that are either in hitstun or are airborne</li>
-        <li>On hit the kiss will always connect and on block or whiff the kiss mark will slowly track the opponent and is unblockable</li>
+    <div id = 'aInfo' value ='Kriemhild'>
+        <h2>Counter Effect</h2>
+        <p>Increased untechable time. Second hit will cause ground bounce.</p>
         <br></br>
-        <h2>5[S]</h2>
-        <p>Appears behind the opponent and walks towards them, attacks exactly like 5S </p>
-        <br></br>
-        <h2>6S</h2>
-        <p>Appears behind the player at the edge of the screen and walks towards the opponent. When she reaches the opponent, she hits them multiple times with a bouquet, blows a kiss, then walks away in the same direction she came from </p>
-        <li>The status effect is the same as 5S</li>
-        <li>Startup is variable and does not activate until she reaches the opponent, or in the case of an airborne opponent she will attack the opponent's last grounded position</li>
+        <p>Azia will do a two part rising attack from the ground. She will first do a rising attack before performing a followup that will pull the opponent downwards towards the player. This can side swap at certain range.</p>
+        <p>Fast enough to function as an anti-air with long untechable times, making confirms very easy. Has some use in combos for certain characters.</p>
     </div>,
-    <div id = 'aInfo' value ='Kuroneko'>
-        <h2>5S</h2>
-        <p>Kuroneko summons rose petals and scatters them towards the opponent, 13 hits in total. </p>
+    <div id = 'aInfo' value ='Pharsalia'>
+        <h2>Counter Effect</h2>
+        <p>Untechable knockdown.</p>
         <br></br>
-        <p>If Kamineko activates, this will have faster startup and will send 22 petals across a longer period of time. </p>
-        <br></br>
-        <h2>6S</h2>
-        <p>Kuroneko places a magic circle on your character. Once any attack touches your character, on block or hit, the magic circle will activate and attack anything within the range of the circle, 
-            including the player. The activation can be blocked by both players. </p>
-        <br></br>
-        <p>If Kamineko activates, the magic circle activation will not harm your character. </p>
+        <p>Pharsalia shoots a large laser across the screen.</p>
+        <p>Very easy to combo into and from due to its Ice element. Has high compatibility with multiple characters due to being a reliable super cancel but most primarily seen as an ender to Ice Character's EB combos.</p>
     </div>,
-    <div id = 'aInfo' value ='Leafa'>
-        <h2>5S</h2>
-        <p>Leafa will set out a large gust of wind across the screen that tracks the opponent. On hit will knock up. </p>
+    <div id = 'aInfo' value ='Peridod'>
+        <h2>Counter Effect</h2>
+        <p>Increased untechable time.</p>
         <br></br>
-        <h2>6S</h2>
-        <p>Leafa will fly to the middle of the screen and do a quick dash homed at the opponent </p>
+        <p>Peridod throws her scythe across the screen before returning like a boomerang.</p>
+        <p>Good for establishing screen control but its high cost limits its usage. Slower startup and smaller hitbox limits her ability to be used in combos.</p>
     </div>,
-    <div id = 'aInfo' value ='LLENN'>
-        <h2>5S</h2>
-        <p>LLENN appears in a proximity sensitive case then jumps out and shoots the opponent </p>
-        <li>LLENN will jump out of the case when either the opponent comes into proximity or a set amount of time passes</li>
-        <li>Unlike a regular projectile, the range on LLENN's attack is fairly short</li>
-        <li>It is possible for the player to hit the case to move it forward, and LLENN will immediately attack afterwards 
-            <ul>
-                <li>The case gains a hitbox when it is hit</li>
-                <li>The distance the case moves is dependent on the attack, A attacks will move it slightly while B and C attacks will move it further</li>
-            </ul>
-        </li>
+    <div id = 'aInfo' value ='Reafe'>
+        <h2>Counter Effect</h2>
+        <p>Increased untechable time.</p>
         <br></br>
-        <h2>5[S]</h2>
-        <p>Same attack as 5S, however the case will hop forward every couple of seconds </p>
-        <li>LLENN can move a total of four times before she jumps out and attacks</li>
-        <br></br>
-        <h2>6S</h2>
-        <p>LLENN appears from behind the player and runs directly in front of the opponent and shoots him </p>
-        <li>The attack has the same properties as 5S</li>
+        <p>Standard fireball. Less untechable time than Fire/Ice variants.</p>
+        <p>Has more blockstun but sees comparitively less use due to being wind element with low untechable time.</p>
     </div>,
-    <div id = 'aInfo' value ='Mashiro'>
-        <h2>5S</h2>
-        <p>Mashiro summons baumkuchen that roll across the screen </p>
-        <li>Can hit up to 5 times and the last hit launches and causes hard knockdown</li>
+    <div id = 'aInfo' value ='Enide'>
+        <h2>Counter Effect</h2>
+        <p>Increased untechable time.</p>
         <br></br>
-        <h2>6S</h2>
-        <p>Mashiro summons four cats that run across the screen </p>
-        <li>The first cat will run in the direction the player is facing while the second cat will run in the opposite direction 
-            and after reaching the edge of the screen, will turn around and travel across the screen again</li>
-        <li>Once a cat attacks the opponent it will no longer have a hitbox</li>
-        <li>All cats cause hard knockdown</li>
-        <li>The cats that travel both directions have one hitbox per direction</li>
-        <li>The travel pattern of the third and fourth cats are the same as the first two</li>
+        <p>Enide creates an explosion directly infront of the player.</p>
+        <p>With a fast startup, large hitbox and low cost, Enide is very good at controlling space in neutral. However due to the wallbounce, without counter-hit, it may be difficult to convert off stray hits.</p>
     </div>,
-    <div id = 'aInfo' value ='Miyuki'>
-        <h2>5S</h2>
-        <p>Miyuki attacks with Floral Rock </p>
+    <div id = 'aInfo' value ='Tecno-Smith'>
+        <h2>Counter Effect</h2>
+        <p>Untechable knockdown.</p>
         <br></br>
-        <h2>6S</h2>
-        <p>Miyuki attacks with Freezing Zone </p>
-        <li>LLENN can move a total of four times before she jumps out and attacks</li>
-        <br></br>
-        <h2>j.6S</h2>
-        <p>Miyuki attacks with Gungnir </p>
-        <li>Can only be used during Trump state, Double Support Ignition, or from a Support Cancel while in the air</li>
+        <p>Rising attack from the ground.</p>
+        <p>With an extremely fast startup and a high reaching hitbox, Techno-Smith can be used as an anti-air however without a counter-hit, it's almost impossible to combo off. Occasionally seen as a combo ender utilizing its element counter untechable knockdown.</p>
     </div>,
-    <div id = 'aInfo' value ='Pai'>
-        <h2>5S</h2>
-        <p>Pai rushes at the opponent with a flurry of attacks</p>
-        <li>There are four hits total and the fourth hit blows the opponent away, or wallbounces in the corner</li>
+    <div id = 'aInfo' value ='Galahad'>
+        <h2>Counter Effect</h2>
+        <p>Increased untechable time.</p>
         <br></br>
-        <h2>6S</h2>
-        <p>Pai lunges at the opponent and attacks with an upward kick </p>
+        <p>Galahad rushes across the screen while performing many rapid strikes. Will slowly stop travelling upon collision with the opponent.</p>
+        <p>Decent startup and reaches far across the screen makes Galahad useful for controlling space. Due to having long hit-stop, she has use in DP into Galahad combos.</p>
     </div>,
-    <div id = 'aInfo' value ='Rusian'>
-        <h2>5S</h2>
-        <p>Russian appears in front of the player and slams his shield at the opponent after a short delay</p>
-        <li>Guard point from 10-40F</li>
+    <div id = 'aInfo' value ='Utahime'>
+        <h2>Counter Effect</h2>
+        <p>Increased hit-stop and untechable time.</p>
         <br></br>
-        <h2>6S</h2>
-        <p>Rusian is chased by a grouup of goblins across the screen from behind the player, running towards the opponent. If Rusian reaches the end of the screen, 
-            he runs back to the player chased by a group of bigger orcs(?) at a much faster pace</p>
-        <li>If the opponent hits Rusian enough on the first chase, he will be picked up by the goblins and the second half doesn't occur</li>
-        <li>The first chase will hit once and cause a small bounce on hit and block</li>
-        <li>The second chase will cause a very high knockup on hit and block</li>
+        <p>Diva Arthur will perform a 360* attack on the ground at the player's position. Will launch the opponent away on hit. will heal the user 5 times after being used, in 1-2 second intervals.</p>
     </div>,
-    <div id = 'aInfo' value ='Ryuuji'>
-        <h2>5S</h2>
-        <p>Ryuuji appears behind the player and throws a lunchbox that floats in the air and travels once in each direction across the screen. Ryuuji throws 3 types of lunchboxes in a 
-            preset order: White Lunchbox, Blue Lunchbox, and Triple Lunchbox. Not picking up lunchboxes alters the effect of the next lunchbox that is picked up. The effects of each lunchbox:</p>
-        <li>White Lunchbox - Gives the player one bar of meter</li>
-        <li>Blue Lunchbox - Gives 2% white health (10% when White Lunchbox is skipped)</li>
-        <li>Triple Lunchbox - Gives 4% white health (15% when both White and Blue Lunchboxes are skipped) 
-            <ul>
-                <li>If the White Lunchbox is skipped and the next two are taken afterwards, it gives 20% white health</li>
-                <li>Opponents can also pick up the lunchboxes.</li>
-            </ul>
-        </li>
+    <div id = 'aInfo' value ='Scathach'>
+        <h2>Counter Effect</h2>
+        <p>Increased untechable time.</p>
         <br></br>
-        <h2>6S</h2>
-        <p>Appears behind the player and travels across screen, then turns around and attacks the opponent </p>
-        <li>If Ryuuji is hit with a projectile before turning around he will instead attack immediately</li>
-        <li>Startup is variable and he does not attack until he reaches the other end of the screen</li>
+        <p>Scathach summons a wind pillar below the oppponent, launching them.</p>
+        <p>Primarily used as a neutral tool due to its tracking and low combo-ability. Landing this raw will restore a noticeable amount of HP.</p>
     </div>,
-    <div id = 'aInfo' value ='Sadao'>
-        <h2>5S</h2>
-        <p>Sadao lunges forward and punches the opponent </p>
-        <li>In order to use Sadao's Devil attacks, he must hit the opponent once, or be blocked twice. 
-            The next time he is called he will use the Devil version attack. A cut-in of Sadao will appear and his voice will change when his next attack is the Devil version. </li>
+    <div id = 'aInfo' value ='Aife'>
+        <h2>Counter Effect</h2>
+        <p>Untechable knockdown. Counter-hit effect will carry through to the second hit.</p>
         <br></br>
-        <h2>5S (Devil Form)</h2>
-        <p>Sadao appears directly above the opponent and fires a barrage of lasers at him </p>
-        <br></br>
-        <h2>6S</h2>
-        <p>Same attack as 5S except it travels about twice as far </p>
-        <br></br>
-        <h2>6S (Devil Form)</h2>
-        <p>Sadao appears in front of the player and swings his sword that releases lasers from the ground </p>
-        <li>Travels across the screen then returns toward the player</li>
+        <p>Aife strikes down at a slanted angle in front of the player before striking across the screen at a slight upwards angle.</p>
+        <p>Fairly fast startup and controls a large amount of space makes Aife a very good neutral support. Unfortunately due to knocking the opponent away, many characters struggle to combo off stray Aife hits.</p>
     </div>,
-    <div id = 'aInfo' value ='Tatsuya'>
-        <h2>5S</h2>
-        <p>Tatsuya appears in front of the player and holds out two CADs. If the opponent attacks Tatsuya he becomes immobilized for a few seconds</p>
-        <li>During this time the opponent can only block, throw tech (cannot initiate a throw), or Escape Blast</li>
+    <div id = 'aInfo' value ='Uasaha'>
+        <h2>Counter Effect</h2>
+        <p>Increased untechable time.</p>
         <br></br>
-        <h2>6S</h2>
-        <p>Tatsuya uses his Sliver Horns to hold the opponent in place </p>
-        <li>The attack does no damage</li>
-        <p>(Only in Ignition) On successful hit (even on block), empowers the next Climax Art. </p>
+        <p>Uathach summons a wind vortex infront of the player. Will vacuum nearby opponents and restores a considerable amount of HP on hit. This effect is also able to vacuum grounded opponents for full damage.</p>
+        <p>Used in EB combos for wind characters. Its ability to vacuum and relaunch grounded opponents can add flexibility for a bit more damage in situations other supports wouldn't be able to.</p>
     </div>,
-    <div id = 'aInfo' value ='Touma'>
-        <h2>5S</h2>
-        <p>Touma will appear in front of your character, holding his right hand out in a counter stance. If an attack hits his hand, it will negate the rest of the attack's 
-            follow-ups (like multi-hit attacks) and emit an short-range unblockable explosion. </p>
+    <div id = 'aInfo' value ='Kaguya'>
+        <h2>Counter Effect</h2>
+        <p>Increased untechable time.</p>
         <br></br>
-        <p>Because the counter explosion is unblockable, it cannot be safe-jumped like many other counters in this game. Touma does appear rather ahead of your character, 
-            leaving space for the opponent to attack you directly without triggering the counter. </p>
-        <br></br>
-        <h2>6S</h2>
-        <p>Touma will lunge out and punch the opponent. If it hits the opponent's face cleanly, it will blow them away horizontally. 
-            Otherwise, it will only do half damage and ground-bounce them. All in all, not a great move for combos or poking, compared to other assists. </p>
-        <br></br>
-        <p>Has a special interaction with Accelerator's 5S counter, where using the punch against the counter will not activate the counterattack. </p>
+        <p>Kaguya summons two revolving orbs around the player character which can collide with opponents for damage. After a delay, the projectiles will fire across the screen. Low untechable time and will disappear if the player is struck.</p>
+        <p>Its low damage and unique nature leaves this solely used as a neutral tool to force the player's advantage. Can be used as an invincible approaching hitbox by combining it with rolls.</p>
     </div>,
-    <div id = 'aInfo' value ='Tomo'>
-        <h2>5S</h2>
-        <p>Fire arrow horizontally </p>
+    <div id = 'aInfo' value ='Grey'>
+        <h2>Counter Effect</h2>
+        <p>Significantly increased hitstun.</p>
         <br></br>
-        <h2>5[S]</h2>
-        <p>Fire charged up arrow horizontally. Launches on hit</p>
-        <li>Longer startup compared to 5S</li>
-        <br></br>
-        <h2>6S</h2>
-        <p>Fire arrow upward at an angle </p>
-        <li>Can hit standing opponent, but only if close up</li>
-        <br></br>
-        <h2>6[S]</h2>
-        <p>Fire charged arrow upward at an angle. Launches on hit </p>
-        <li>Can hit standing opponent, but only if close up</li>
-        <li>Longer startup compared to 6S</li>
-        <br></br>
-        <h2>41236S</h2>
-        <p>Fire super charged arrow upward at an angle for 2 meter</p>
-        <li>Enhance damage by pressing S during super flash at the cost of 1 meter. Can enhance up to 3 times (for a total of 5 meter spent)</li>
-        <li>Can hit standing opponent, but only if close up</li>
+        <p>Little Grey tracks the opponent and performs multiple hits which cause a significant amount of hitstun or blockstun. On hit, will scale combos significantly.</p>
+        <p>Strong assist on paper but due to its inability to be cancelled into from specials and the significant combo scaling it causes, it sees limited use.</p>
     </div>,
-    <div id = 'aInfo' value ='Uiharu'>
-        <h2>5S</h2>
-        <p>Uiharu uses her laptop to coordinate an attack against the opponent </p>
-        <li>A reticle appears over the opponent then attacks shortly afterwards</li>
-        <li>After the initial attack, Uiharu assists the player with 3 additional sequential attacks</li>
-        <li>If a Climax Arts is used, it will cancel out the remaining attacks</li>
-        <li>The activation requirements for the follow up attacks are selected at random and include the following: 
-            <ul>
-                <li>Denoted by the clock symbol, activates automatically after about 5 seconds</li>
-                <li>Denoted by the V looking symbol, activates when the opponent is knocked down (does not activate against air teching)</li>
-                <li>Denoted by the explosion symbol, activates when the player attacks the opponent 2~3 times (regardless of hit or block)</li>
-            </ul>
-        </li>
-        <li>Aside the timed attack, you have about 20 seconds to activate the follow up attack before Uiharu disappears</li>
+    <div id = 'aInfo' value ='Millionaire Arthur'>
+        <h2>Counter Effect</h2>
+        <p>N/A</p>
         <br></br>
-        <h2>6S</h2>
-        <p>Uiharu appears in front of the player standing around absentmindedly </p>
-        <li>This move increases the overall length of both Power Blast, Trump Card state, potential, and also recovers about 4% of the player's health.  
-            <ul>
-                <li>The first use during any of these increases length by approximately four seconds. The second use increases length by approximately two seconds. Every use after that increases by approximately one second. </li>
-                <ul>
-                    <li>For example, let's say Kuroko is in potential and uses Uiharu 6S. This increases the length of her potential by four seonds. Let's say she uses 6S again before the potential runs out. 
-                        The length will then increase by another two seconds, 
-                        for a total increase of 6 seconds. Let's say potential runs out, and then Kuroko activates potential again. 
-                        Because this is a separate instance of potential, if the player uses 6S now it will once again extend potential by four second.
-                    </li>
-                </ul>
-                <li>The amount of time Uiharu is on screen appears to be proportional to the increase. However, no testing has been done to see if it is linear. Also, no testing has been done to see if 
-                    Uiharu getting hit out of 6S affect subsequent uses.</li>
-            </ul>
-        </li>
+        <p>Grants super armor to the next attack the player performs. Multi-part attacks (e.g rekkas) will retain the super armor. Super armor is only active during the first attack performed after summoning. Will be wasted if the player is hit before use.</p>
     </div>,
-    <div id = 'aInfo' value ='Wilhelmina'>
-        <h2>5S</h2>
-        <p>Wilhelmina appears above the player and attacks the opponent with bandages</p>
-        <li>Tracks the opponent, however there is a limit on the range and will not reach more than 3/4th of the screen</li>
+    <div id = 'aInfo' value ='Akira'>
+        <h2>Counter Effect</h2>
+        <p>Untechable knockdown on the last hit.</p>
         <br></br>
-        <h2>6S</h2>
-        <p>After a short delay, Wilhelmina expands her bandages across the screen and cocoons the opponent </p>
-        <li>Just like 5S this attack tracks the opponent, but it will also reach full screen</li>
+        <p>Akira kicks an arcade cab at the opponent. Significant frame advantage and corner carry. Will launch on final hit. Can be delayed by holding the button used to summon her. Will strike 27F after button release.</p>
+        <p>Last hit is not a solid blockstring and can be used to set up unblockable command grab setups.</p>
     </div>,
-    <div id = 'aInfo' value ='Zero'>
-        <h2>5S</h2>
-        <p>Parry attack, then blowback opponent into wallbounce </p>
-        <li>Allows for easy followup combos</li>
+    <div id = 'aInfo' value ='Guinevere'>
+        <h2>Counter Effect</h2>
+        <p>Increased Hitstun.</p>
         <br></br>
-        <h2>6S</h2>
-        <p>Summon vines that travel horizontally fullscreen. Launches opponent on hit </p>
-        <li>Doesn't seem to really hit airborn opponents</li>
-        <li>Very small amount of active frames; not good Oki</li>
-        <br></br>
-        <h2>S</h2>
-        <p>Knock attacking opponent away from you. Dead angle attack </p>
-        <li>Can only be used during blockstun at the cost of 2 meter</li>
+        <p>Strikes the opponent in an area in front of the player on the ground. On hit, will increase the current mana cost of the opponent's support cards by 1 for the next use. This affects each support individually and can stack up to a maximum of 5.</p>
+        <p>While it does not offer high damage potential, Guinevere's unique ability to raise the cost of supports can significantly influence the match. Very effective against characters/players who use low cost or multiple supports in tandem as the effect is only removed upon use for that particular support.</p>
     </div>,
 ]
 //#endregion
