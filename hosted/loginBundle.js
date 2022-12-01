@@ -488,7 +488,6 @@ var createSignupWindow = function createSignupWindow(csrf) {
   ReactDOM.unmountComponentAtNode(document.querySelector("#content"));
   ReactDOM.unmountComponentAtNode(document.querySelector("#info"));
   ReactDOM.unmountComponentAtNode(document.querySelector("#search"));
-  ReactDOM.unmountComponentAtNode(document.querySelector("#gifSection"));
   ReactDOM.render( /*#__PURE__*/React.createElement(SignupWindow, {
     csrf: csrf
   }), document.querySelector("#content"));
@@ -587,15 +586,15 @@ var setup = function setup(csrf) {
   signupButton.addEventListener("click", function (e) {
     e.preventDefault();
     createSignupWindow(csrf); //Uncomment on site up 
-    //createGifs();
 
+    createGifs();
     return false;
   });
   loginButton.addEventListener("click", function (e) {
     e.preventDefault();
     createLoginWindow(csrf); //Uncomment on site up
-    //createGifs();
 
+    createGifs();
     return false;
   });
   reportButton.addEventListener("click", function (e) {
@@ -680,7 +679,7 @@ var char1Search = /*#__PURE__*/React.createElement("select", {
   value: "Yamaneko"
 }, "Yamaneko Arthur"), /*#__PURE__*/React.createElement("option", {
   value: "Zex"
-}, "Zex Siefried"));
+}, "Zex Siegfried"));
 var char2Search = /*#__PURE__*/React.createElement("select", {
   id: "char2Search",
   className: "form-control"
@@ -717,7 +716,7 @@ var char2Search = /*#__PURE__*/React.createElement("select", {
   value: "Yamaneko"
 }, "Yamaneko Arthur"), /*#__PURE__*/React.createElement("option", {
   value: "Zex"
-}, "Zex Siefried"));
+}, "Zex Siegfried"));
 var assistInfoSelect = /*#__PURE__*/React.createElement("select", {
   id: "assistInfoSelect",
   className: "form-control"
@@ -823,7 +822,7 @@ var charDataSearch = /*#__PURE__*/React.createElement("select", {
   value: "Yamaneko"
 }, "Yamaneko Arthur"), /*#__PURE__*/React.createElement("option", {
   value: "Zex"
-}, "Zex Siefried"));
+}, "Zex Siegfried"));
 var assistInfo = [/*#__PURE__*/React.createElement("div", {
   id: "aInfo",
   value: "Faye"

@@ -473,7 +473,6 @@ const createSignupWindow = (csrf) => {
     ReactDOM.unmountComponentAtNode(document.querySelector("#content"));
     ReactDOM.unmountComponentAtNode(document.querySelector("#info"));
     ReactDOM.unmountComponentAtNode(document.querySelector("#search"));
-    ReactDOM.unmountComponentAtNode(document.querySelector("#gifSection"));
 
     ReactDOM.render(
         <SignupWindow csrf={csrf} />,
@@ -609,14 +608,14 @@ const setup = (csrf) => {
     signupButton.addEventListener("click", (e) => {
         e.preventDefault();
         createSignupWindow(csrf); //Uncomment on site up 
-        //createGifs();
+        createGifs();
         return false;
     });
 
     loginButton.addEventListener("click", (e) => {
         e.preventDefault();
         createLoginWindow(csrf); //Uncomment on site up
-        //createGifs();
+        createGifs();
         return false;
     });
 
@@ -681,7 +680,7 @@ const char1Search = <select id = "char1Search" className='form-control'>
     <option value="EternalFlame">Eternal Flame</option><option value="Iai">Iai Arthur</option><option value="Iori">Iori</option>
     <option value="Koume">Koume</option><option value="Nimue">Nimue</option><option value="Nitou">Nitou Arthur</option>
     <option value="Riesz">Riesz</option><option value="SnowWhite">Snow White</option><option value="Thief">Thief Arthur</option>
-    <option value="Yamaneko">Yamaneko Arthur</option><option value="Zex">Zex Siefried</option>
+    <option value="Yamaneko">Yamaneko Arthur</option><option value="Zex">Zex Siegfried</option>
     </select>;
 
 const char2Search= <select id = "char2Search" className='form-control'>
@@ -690,7 +689,7 @@ const char2Search= <select id = "char2Search" className='form-control'>
     <option value="EternalFlame">Eternal Flame</option><option value="Iai">Iai Arthur</option><option value="Iori">Iori</option>
     <option value="Koume">Koume</option><option value="Nimue">Nimue</option><option value="Nitou">Nitou Arthur</option>
     <option value="Riesz">Riesz</option><option value="SnowWhite">Snow White</option><option value="Thief">Thief Arthur</option>
-    <option value="Yamaneko">Yamaneko Arthur</option><option value="Zex">Zex Siefried</option>
+    <option value="Yamaneko">Yamaneko Arthur</option><option value="Zex">Zex Siegfried</option>
     </select>;
 
 const assistInfoSelect = <select id = "assistInfoSelect" className='form-control'>
@@ -714,7 +713,7 @@ const charDataSearch = <select id = "charDataSearch" className='form-control'>
     <option value="EternalFlame">Eternal Flame</option><option value="Iai">Iai Arthur</option><option value="Iori">Iori</option>
     <option value="Koume">Koume</option><option value="Nimue">Nimue</option><option value="Nitou">Nitou Arthur</option>
     <option value="Riesz">Riesz</option><option value="SnowWhite">Snow White</option><option value="Thief">Thief Arthur</option>
-    <option value="Yamaneko">Yamaneko Arthur</option><option value="Zex">Zex Siefried</option>
+    <option value="Yamaneko">Yamaneko Arthur</option><option value="Zex">Zex Siegfried</option>
     </select>;
 
 const assistInfo = [

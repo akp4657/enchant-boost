@@ -920,7 +920,7 @@ var char1Select = /*#__PURE__*/React.createElement("select", {
   value: "Yamaneko"
 }, "Yamaneko Arthur"), /*#__PURE__*/React.createElement("option", {
   value: "Zex"
-}, "Zex Siefried"));
+}, "Zex Siegfried"));
 var char2Select = /*#__PURE__*/React.createElement("select", {
   id: "char2Select",
   className: "form-control"
@@ -950,7 +950,7 @@ var char2Select = /*#__PURE__*/React.createElement("select", {
   value: "Yamaneko"
 }, "Yamaneko Arthur"), /*#__PURE__*/React.createElement("option", {
   value: "Zex"
-}, "Zex Siefried"));
+}, "Zex Siegfried"));
 var char1Search = /*#__PURE__*/React.createElement("select", {
   id: "char1Search",
   className: "form-control"
@@ -987,7 +987,7 @@ var char1Search = /*#__PURE__*/React.createElement("select", {
   value: "Yamaneko"
 }, "Yamaneko Arthur"), /*#__PURE__*/React.createElement("option", {
   value: "Zex"
-}, "Zex Siefried"));
+}, "Zex Siegfried"));
 var char2Search = /*#__PURE__*/React.createElement("select", {
   id: "char2Search",
   className: "form-control"
@@ -1024,7 +1024,7 @@ var char2Search = /*#__PURE__*/React.createElement("select", {
   value: "Yamaneko"
 }, "Yamaneko Arthur"), /*#__PURE__*/React.createElement("option", {
   value: "Zex"
-}, "Zex Siefried"));
+}, "Zex Siegfried"));
 var assistInfoSelect = /*#__PURE__*/React.createElement("select", {
   id: "assistInfoSelect",
   className: "form-control"
@@ -1130,7 +1130,7 @@ var charDataSearch = /*#__PURE__*/React.createElement("select", {
   value: "Yamaneko"
 }, "Yamaneko Arthur"), /*#__PURE__*/React.createElement("option", {
   value: "Zex"
-}, "Zex Siefried"));
+}, "Zex Siegfried"));
 var sourceObj = /*#__PURE__*/React.createElement("iframe", {
   height: "550",
   width: "1100",
