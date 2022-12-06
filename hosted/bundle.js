@@ -40,8 +40,8 @@ var handleVideo = function handleVideo(e) {
   } // Check if the error uses the correct link *just copying the url
 
 
-  if (!$("#videoLink").val().includes('www.youtube.com')) {
-    alert("ERROR | Please use a valid YouTube link");
+  if (!$("#videoLink").val().includes('www.youtube.com') && !$("#videoLink").val().includes('www.twitch.tv')) {
+    alert("ERROR | Please use a valid YouTube/Twitch link");
     return false;
   } // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers
   // https://www.w3schools.com/jsref/jsref_replace.asp
@@ -59,7 +59,12 @@ var handleVideo = function handleVideo(e) {
         var newArray = array[0].replace(/:.*?/, "h");
         var newArray2 = newArray.replace(/:.*?/, "m");
         var finalArray = newArray2 + "s";
-        videoObj[videoKey].link = "".concat(videoObj.videoLink, "&t=").concat(finalArray);
+
+        if ($("#videoLink").val().includes('www.twitch.tv')) {
+          videoObj[videoKey].link = "".concat(videoObj.videoLink, "?t=").concat(finalArray);
+        } else {
+          videoObj[videoKey].link = "".concat(videoObj.videoLink, "&t=").concat(finalArray);
+        }
       } else {
         videoObj[videoKey].link = "".concat(videoObj.videoLink, "&t=").concat(this.value);
       }
