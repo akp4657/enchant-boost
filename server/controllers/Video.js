@@ -120,9 +120,9 @@ const searchVideos = (request, response) => {
   // $or syntax to check for name in either slot 1 or 2 for player/char
   // Using regex to be case insensitive and act likes '$like' in SQL 
   if (player1) {
-      params.$and[i] = { $or: [{ player1: {$regex: RegExp('^' + player1 ), $options: 'i'}}, { player2: {$regex: RegExp('^' + player1 ), $options: 'i'}}]}
-      i++;
-  }
+    params.$and[i] = { $or: [{ player1: {$regex: RegExp('^' + player1 ), $options: 'i'}}, { player2: {$regex: RegExp('^' + player1 ), $options: 'i'}}]}
+    i++;
+}
   if (player2) {
     params.$and[i] = { $or: [{ player1: {$regex: RegExp('^' + player2 ), $options: 'i'}}, { player2: {$regex: RegExp('^' + player2 ), $options: 'i'}}]}
     i++;
@@ -143,6 +143,16 @@ const searchVideos = (request, response) => {
     params.$and[i] = { $and: [{ char2: `${char2}` }, { char1: `${char1}` }] };
   } else if (char1 && char2) {
     params.$and[i] = { $or: [{ char2: `${char2}` }, { char1: `${char1}` }, { char2: `${char1}` }, { char1: `${char2}` }] };
+    i++;
+  }
+
+  // If the character and player are searched
+  if (char1 && player1) {
+    params.$and[i] = { $or: [{ char1: `${char1}`, player1: {$regex: RegExp('^' + player1 ), $options: 'i'} }, { char2: `${char1}`, player2: {$regex: RegExp('^' + player1 ), $options: 'i'} }] };
+    i++;
+  }
+  if (char2 && player2) {
+    params.$and[i] = { $or: [{ char1: `${char2}`, player1: {$regex: RegExp('^' + player2 ), $options: 'i'} }, { char2: `${char2}`, player2: {$regex: RegExp('^' + player2 ), $options: 'i'} }] };
     i++;
   }
 

@@ -676,7 +676,7 @@ $(document).ready(function() {
 //Separated the character forms for ease of reference and readability in above code
 const char1Search = <select id = "char1Search" className='form-control'>
     <option value="undefined" disabled selected hidden>Char 1</option><option value="Anyone">Anyone</option>
-    <option value="Arthur">Arthur</option><option value="Bisclavret">Bisclavret</option>
+    <option value="BladeProtector">Blade Protector</option><option value="Bisclavret">Bisclavret</option>
     <option value="EternalFlame">Eternal Flame</option><option value="Iai">Iai Arthur</option><option value="Iori">Iori</option>
     <option value="Koume">Koume</option><option value="Nimue">Nimue</option><option value="Nitou">Nitou Arthur</option>
     <option value="Riesz">Riesz</option><option value="SnowWhite">Snow White</option><option value="Thief">Thief Arthur</option>
@@ -685,7 +685,7 @@ const char1Search = <select id = "char1Search" className='form-control'>
 
 const char2Search= <select id = "char2Search" className='form-control'>
     <option value="undefined" disabled selected hidden>Char 2</option><option value="Anyone">Anyone</option>
-    <option value="Arthur">Arthur</option><option value="Bisclavret">Bisclavret</option>
+    <option value="BladeProtector">Blade Protector</option><option value="Bisclavret">Bisclavret</option>
     <option value="EternalFlame">Eternal Flame</option><option value="Iai">Iai Arthur</option><option value="Iori">Iori</option>
     <option value="Koume">Koume</option><option value="Nimue">Nimue</option><option value="Nitou">Nitou Arthur</option>
     <option value="Riesz">Riesz</option><option value="SnowWhite">Snow White</option><option value="Thief">Thief Arthur</option>
@@ -709,7 +709,7 @@ const assistInfoSelect = <select id = "assistInfoSelect" className='form-control
 
 const charDataSearch = <select id = "charDataSearch" className='form-control'>
     <option value="undefined" disabled selected hidden>Char</option><option value="Anyone">Anyone</option>
-    <option value="Arthur">Arthur</option><option value="Bisclavret">Bisclavret</option>
+    <option value="BladeProtector">Blade Protector</option><option value="Bisclavret">Bisclavret</option>
     <option value="EternalFlame">Eternal Flame</option><option value="Iai">Iai Arthur</option><option value="Iori">Iori</option>
     <option value="Koume">Koume</option><option value="Nimue">Nimue</option><option value="Nitou">Nitou Arthur</option>
     <option value="Riesz">Riesz</option><option value="SnowWhite">Snow White</option><option value="Thief">Thief Arthur</option>

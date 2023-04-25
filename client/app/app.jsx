@@ -49,17 +49,17 @@ const handleVideo = (e) => {
 
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers
     // https://www.w3schools.com/jsref/jsref_replace.asp
-    let regex = /[0-9][0-9]:[0-9][0-9]:[0-9][0-9]/g;
+    let regex = /[0-9]:[0-9][0-9]:[0-9][0-9]/g;
 
 
      /// Putting each input into its own object to send to the server 
      ///
      $('#videoForm').find('td > input').each(function(){
         if(modValue===0) {
+            let array = this.value.match(regex);
 
             // Using regex to ensure the timestamp is correct
-            if(regex.test(this.value)) {
-                let array = this.value.match(regex);
+            if(regex.test(array)) {
                 JSON.stringify(array);
                 let newArray = array[0].replace(/:.*?/, "h");
                 let newArray2 = newArray.replace(/:.*?/, "m");
@@ -71,7 +71,8 @@ const handleVideo = (e) => {
                     videoObj[videoKey].link = `${videoObj.videoLink}&t=${finalArray}`;
                 }
             } else {
-                videoObj[videoKey].link = `${videoObj.videoLink}&t=${this.value}`;
+                alert("ERROR | Please use a valid timestamp");
+                return false;
             }
         } 
         if(modValue===1) {
@@ -265,12 +266,6 @@ const SearchForm = () => {
     let char1Src = `/assets/img/Characters/${char1Select}.png`
     let char2Src = `/assets/img/Characters/${char2Select}.png`
 
-    console.log(
-        {
-            char1: char1Select,
-            char2: char2Select
-        }
-    )
 
     return(
         <form
@@ -938,7 +933,7 @@ $(document).ready(function() {
 //#region Character Forms
 //Separated the character forms for ease of reference and readability in above code
 const char1Select = <select id = "char1Select" className='form-control'>
-    <option value="Arthur">Arthur</option><option value="Bisclavret">Bisclavret</option>
+    <option value="BladeProtector">Blade Protector</option><option value="Bisclavret">Bisclavret</option>
     <option value="EternalFlame">Eternal Flame</option><option value="Iai">Iai Arthur</option><option value="Iori">Iori</option>
     <option value="Koume">Koume</option><option value="Nimue">Nimue</option><option value="Nitou">Nitou Arthur</option>
     <option value="Riesz">Riesz</option><option value="SnowWhite">Snow White</option><option value="Thief">Thief Arthur</option>
@@ -947,7 +942,7 @@ const char1Select = <select id = "char1Select" className='form-control'>
 
 
 const char2Select = <select id = "char2Select" className='form-control'>
-    <option value="Arthur">Arthur</option><option value="Bisclavret">Bisclavret</option>
+    <option value="BladeProtector">Blade Protector</option><option value="Bisclavret">Bisclavret</option>
     <option value="EternalFlame">Eternal Flame</option><option value="Iai">Iai Arthur</option><option value="Iori">Iori</option>
     <option value="Koume">Koume</option><option value="Nimue">Nimue</option><option value="Nitou">Nitou Arthur</option>
     <option value="Riesz">Riesz</option><option value="SnowWhite">Snow White</option><option value="Thief">Thief Arthur</option>
@@ -957,7 +952,7 @@ const char2Select = <select id = "char2Select" className='form-control'>
 
 const char1Search= <select id = "char1Search" className='form-control'>
     <option value="undefined" disabled selected hidden>Char 1</option><option value="Anyone">Anyone</option>
-    <option value="Arthur">Arthur</option><option value="Bisclavret">Bisclavret</option>
+    <option value="BladeProtector">Blade Protector</option><option value="Bisclavret">Bisclavret</option>
     <option value="EternalFlame">Eternal Flame</option><option value="Iai">Iai Arthur</option><option value="Iori">Iori</option>
     <option value="Koume">Koume</option><option value="Nimue">Nimue</option><option value="Nitou">Nitou Arthur</option>
     <option value="Riesz">Riesz</option><option value="SnowWhite">Snow White</option><option value="Thief">Thief Arthur</option>
@@ -966,7 +961,7 @@ const char1Search= <select id = "char1Search" className='form-control'>
 
 const char2Search= <select id = "char2Search" className='form-control'>
     <option value="undefined" disabled selected hidden>Char 2</option><option value="Anyone">Anyone</option>
-    <option value="Arthur">Arthur</option><option value="Bisclavret">Bisclavret</option>
+    <option value="BladeProtector">Blade Protector</option><option value="Bisclavret">Bisclavret</option>
     <option value="EternalFlame">Eternal Flame</option><option value="Iai">Iai Arthur</option><option value="Iori">Iori</option>
     <option value="Koume">Koume</option><option value="Nimue">Nimue</option><option value="Nitou">Nitou Arthur</option>
     <option value="Riesz">Riesz</option><option value="SnowWhite">Snow White</option><option value="Thief">Thief Arthur</option>
@@ -990,7 +985,7 @@ const assistInfoSelect = <select id = "assistInfoSelect" className='form-control
 
 const charDataSearch = <select id = "charDataSearch" className='form-control'>
     <option value="undefined" disabled selected hidden>Char</option><option value="Anyone">Anyone</option>
-    <option value="Arthur">Arthur</option><option value="Bisclavret">Bisclavret</option>
+    <option value="BladeProtector">Blade Protector</option><option value="Bisclavret">Bisclavret</option>
     <option value="EternalFlame">Eternal Flame</option><option value="Iai">Iai Arthur</option><option value="Iori">Iori</option>
     <option value="Koume">Koume</option><option value="Nimue">Nimue</option><option value="Nitou">Nitou Arthur</option>
     <option value="Riesz">Riesz</option><option value="SnowWhite">Snow White</option><option value="Thief">Thief Arthur</option>

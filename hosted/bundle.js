@@ -47,14 +47,14 @@ var handleVideo = function handleVideo(e) {
   // https://www.w3schools.com/jsref/jsref_replace.asp
 
 
-  var regex = /[0-9][0-9]:[0-9][0-9]:[0-9][0-9]/g; /// Putting each input into its own object to send to the server 
+  var regex = /[0-9]:[0-9][0-9]:[0-9][0-9]/g; /// Putting each input into its own object to send to the server 
   ///
 
   $('#videoForm').find('td > input').each(function () {
     if (modValue === 0) {
-      // Using regex to ensure the timestamp is correct
-      if (regex.test(this.value)) {
-        var array = this.value.match(regex);
+      var array = this.value.match(regex); // Using regex to ensure the timestamp is correct
+
+      if (regex.test(array)) {
         JSON.stringify(array);
         var newArray = array[0].replace(/:.*?/, "h");
         var newArray2 = newArray.replace(/:.*?/, "m");
@@ -66,7 +66,8 @@ var handleVideo = function handleVideo(e) {
           videoObj[videoKey].link = "".concat(videoObj.videoLink, "&t=").concat(finalArray);
         }
       } else {
-        videoObj[videoKey].link = "".concat(videoObj.videoLink, "&t=").concat(this.value);
+        alert("ERROR | Please use a valid timestamp");
+        return false;
       }
     }
 
@@ -266,10 +267,6 @@ var SearchForm = function SearchForm() {
   var char2Select = $("#char2Search").find(":selected").val();
   var char1Src = "/assets/img/Characters/".concat(char1Select, ".png");
   var char2Src = "/assets/img/Characters/".concat(char2Select, ".png");
-  console.log({
-    char1: char1Select,
-    char2: char2Select
-  });
   return /*#__PURE__*/React.createElement("form", {
     id: "searchForm",
     onChange: handleSearch,
@@ -900,8 +897,8 @@ var char1Select = /*#__PURE__*/React.createElement("select", {
   id: "char1Select",
   className: "form-control"
 }, /*#__PURE__*/React.createElement("option", {
-  value: "Arthur"
-}, "Arthur"), /*#__PURE__*/React.createElement("option", {
+  value: "BladeProtector"
+}, "Blade Protector"), /*#__PURE__*/React.createElement("option", {
   value: "Bisclavret"
 }, "Bisclavret"), /*#__PURE__*/React.createElement("option", {
   value: "EternalFlame"
@@ -930,8 +927,8 @@ var char2Select = /*#__PURE__*/React.createElement("select", {
   id: "char2Select",
   className: "form-control"
 }, /*#__PURE__*/React.createElement("option", {
-  value: "Arthur"
-}, "Arthur"), /*#__PURE__*/React.createElement("option", {
+  value: "BladeProtector"
+}, "Blade Protector"), /*#__PURE__*/React.createElement("option", {
   value: "Bisclavret"
 }, "Bisclavret"), /*#__PURE__*/React.createElement("option", {
   value: "EternalFlame"
@@ -967,8 +964,8 @@ var char1Search = /*#__PURE__*/React.createElement("select", {
 }, "Char 1"), /*#__PURE__*/React.createElement("option", {
   value: "Anyone"
 }, "Anyone"), /*#__PURE__*/React.createElement("option", {
-  value: "Arthur"
-}, "Arthur"), /*#__PURE__*/React.createElement("option", {
+  value: "BladeProtector"
+}, "Blade Protector"), /*#__PURE__*/React.createElement("option", {
   value: "Bisclavret"
 }, "Bisclavret"), /*#__PURE__*/React.createElement("option", {
   value: "EternalFlame"
@@ -1004,8 +1001,8 @@ var char2Search = /*#__PURE__*/React.createElement("select", {
 }, "Char 2"), /*#__PURE__*/React.createElement("option", {
   value: "Anyone"
 }, "Anyone"), /*#__PURE__*/React.createElement("option", {
-  value: "Arthur"
-}, "Arthur"), /*#__PURE__*/React.createElement("option", {
+  value: "BladeProtector"
+}, "Blade Protector"), /*#__PURE__*/React.createElement("option", {
   value: "Bisclavret"
 }, "Bisclavret"), /*#__PURE__*/React.createElement("option", {
   value: "EternalFlame"
@@ -1110,8 +1107,8 @@ var charDataSearch = /*#__PURE__*/React.createElement("select", {
 }, "Char"), /*#__PURE__*/React.createElement("option", {
   value: "Anyone"
 }, "Anyone"), /*#__PURE__*/React.createElement("option", {
-  value: "Arthur"
-}, "Arthur"), /*#__PURE__*/React.createElement("option", {
+  value: "BladeProtector"
+}, "Blade Protector"), /*#__PURE__*/React.createElement("option", {
   value: "Bisclavret"
 }, "Bisclavret"), /*#__PURE__*/React.createElement("option", {
   value: "EternalFlame"

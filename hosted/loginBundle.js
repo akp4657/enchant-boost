@@ -654,8 +654,8 @@ var char1Search = /*#__PURE__*/React.createElement("select", {
 }, "Char 1"), /*#__PURE__*/React.createElement("option", {
   value: "Anyone"
 }, "Anyone"), /*#__PURE__*/React.createElement("option", {
-  value: "Arthur"
-}, "Arthur"), /*#__PURE__*/React.createElement("option", {
+  value: "BladeProtector"
+}, "Blade Protector"), /*#__PURE__*/React.createElement("option", {
   value: "Bisclavret"
 }, "Bisclavret"), /*#__PURE__*/React.createElement("option", {
   value: "EternalFlame"
@@ -691,8 +691,8 @@ var char2Search = /*#__PURE__*/React.createElement("select", {
 }, "Char 2"), /*#__PURE__*/React.createElement("option", {
   value: "Anyone"
 }, "Anyone"), /*#__PURE__*/React.createElement("option", {
-  value: "Arthur"
-}, "Arthur"), /*#__PURE__*/React.createElement("option", {
+  value: "BladeProtector"
+}, "Blade Protector"), /*#__PURE__*/React.createElement("option", {
   value: "Bisclavret"
 }, "Bisclavret"), /*#__PURE__*/React.createElement("option", {
   value: "EternalFlame"
@@ -797,8 +797,8 @@ var charDataSearch = /*#__PURE__*/React.createElement("select", {
 }, "Char"), /*#__PURE__*/React.createElement("option", {
   value: "Anyone"
 }, "Anyone"), /*#__PURE__*/React.createElement("option", {
-  value: "Arthur"
-}, "Arthur"), /*#__PURE__*/React.createElement("option", {
+  value: "BladeProtector"
+}, "Blade Protector"), /*#__PURE__*/React.createElement("option", {
   value: "Bisclavret"
 }, "Bisclavret"), /*#__PURE__*/React.createElement("option", {
   value: "EternalFlame"
