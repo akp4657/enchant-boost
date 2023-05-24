@@ -118,11 +118,11 @@ const searchVideos = (request, response) => {
 
   // If param exists, add it to the $and array with the
   // $or syntax to check for name in either slot 1 or 2 for player/char
-  // Using regex to be case insensitive and act likes '$like' in SQL 
+  // Using regex to be case insensitive and act likes '$like' in SQL
   if (player1) {
     params.$and[i] = { $or: [{ player1: {$regex: RegExp('^' + player1 ), $options: 'i'}}, { player2: {$regex: RegExp('^' + player1 ), $options: 'i'}}]}
     i++;
-}
+  }
   if (player2) {
     params.$and[i] = { $or: [{ player1: {$regex: RegExp('^' + player2 ), $options: 'i'}}, { player2: {$regex: RegExp('^' + player2 ), $options: 'i'}}]}
     i++;
@@ -139,7 +139,7 @@ const searchVideos = (request, response) => {
   }
   
   // Check if it's a mirror first
-  if(char1 === char2) {
+  if(char1 && char2) {
     params.$and[i] = { $and: [{ char2: `${char2}` }, { char1: `${char1}` }] };
   } else if (char1 && char2) {
     params.$and[i] = { $or: [{ char2: `${char2}` }, { char1: `${char1}` }, { char2: `${char1}` }, { char1: `${char2}` }] };
@@ -171,6 +171,7 @@ const searchVideos = (request, response) => {
 
   if (i === 0) params = {}; // set params to empty object if no query params were sent
   
+  //console.log(params.$and.$or)
   return Video.VideoModel.find(params, (err, docs) => {
     if (err) {
       console.log(err);
